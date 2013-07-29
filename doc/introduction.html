@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>wmpipe: an Introduction</title>
+<meta name="generator" content="Bluefish 2.2.4" >
+<meta name="author" content="Unknown" >
+<meta name="date" content="2013-07-29T02:06:27-0400" >
+<meta name="copyright" content="Nathan Fisher">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link href="wmpipe.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<a name="top"></a>
+<table align="center" valign="top" border="0" cellpadding="20" cellspacing="6">
+<tr>
+<td valign="top">
+
+<!-- Overview -->
+<h3>Introduction to wmpipe</h3>
+<p>The basic idea behind wmpipe is to create a library of shell functions
+that enable the quick creation of dynamic (pipe) menus for certain X
+Window Managers.</p>
+
+<p>The basic requirements were a logical and consistent code layout,
+efficient code execution (so as to offset the shell overhead), portability
+to different distros/os's and the ability to customize and integrate the
+menus easily into a user's desktop.</p>
+
+<p>The distribution contains several sample scripts of varying utility
+that cover some of the most common usages for pipe menus. Of interest and
+to display the modular nature of the code, the scripts are implemented
+as multi-call executables (like busybox). In other words, one script can
+be used to generate a menu for icewm, pekwm, and openbox with an identical
+or nearly identical set of features and layout in each WM. This is
+accomplished by reading the name the script was executed as to set an
+environment variable and so tell the script which set of functions to
+load.</p>
+
+<p>Also of interest is that the scripts are re-locatable, with the
+provisos that the main config files are in /etc/wmpipe and the relative
+locations of the scripts and function libraries are maintained. In other
+words, you can move the scripts from /foo/bin to /bar/bin just so long
+as you also move the shell function files in /foo/lib/wmpipe to
+/bar/lib/wmpipe.</p>
+
+<div class="navfooter">
+  <ul>
+    <li class="next">
+      <a accesskey="n" href="installation.html"
+      title="wmpipe: Installation">Next</a>
+      <p>
+        Installation
+      </p>
+    </li>
+  </ul>
+</div>
+<hr><br /><br />
+</td>
+
+<!-- Links table starts here -->
+      <td style="width: 100px; ">
+      <h3 class="links">Contents</h3>
+		<a href="introduction.html" title="wmpipe: an Introduction">
+		Introduction</a><br>
+		<a href="installation.html" title="wmpipe: Installation">
+		Installation</a><br>
+		<a href="usage.html" title="wmpipe: Usage">
+		Usage</a><br>
+		<a href="scripts.html" title="wmpipe: Scripts">
+		Scripts</a><br>
+      </td>
+<!-- End links table -->
+
+</tr>
+</table>
+</body>
+</html>

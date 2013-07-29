@@ -1,0 +1,63 @@
+########################################################################
+# Global user configuration
+
+# What file manager are we using...
+# filemanager="nautilus"
+# filemanager="thunar"
+filemanager="pcmanfm"
+# filemanager="rox"
+
+# Terminal program
+# TERMINAL=gnome-terminal
+# TERMINAL=xfce4-terminal
+TERMINAL=lxterminal
+# TERMINAL=urxvt
+
+# Program to open files via mime types
+# FILE_HANDLER=gnome-open
+# FILE_HANDLER=exo-open
+# FILE_HANDLER=xdg-open
+# FILE_HANDLER=rox
+FILE_HANDLER=mimeo
+
+# End Global section
+########################################################################
+
+########################################################################
+# Wallpaper section
+
+# Directories under which our backgrounds are stored
+# If multiple directories, space delimited (eg: /usr/share/backgrounds ~/.config/backgrounds)
+WP_DIRS="/usr/share/backgrounds /usr/local/share/backgrounds /usr/share/archlinux/wallpaper"
+# Command used to set the background
+WP_SETCMD="feh --bg-scale"
+# Whether to show wallpaper icons or not
+WP_ICONS=true
+
+# End Wallpaper section
+########################################################################
+
+########################################################################
+# MPD section
+
+# The host we want to connect to. Most people will choose the default
+# (localhost).
+MPD_HOST=localhost
+# The port our mpd server is running on. Again, the default is normally
+# correct.
+MPD_PORT=6600
+# The client program we want to be able to launch from this menu.
+MPD_CLIENT="ncmpc"
+# If you are using a cli client, set this to true and it will be
+# launched from the terminal configured above
+MPD_CLIENT_TERMINAL="true"
+
+# End MPD section
+########################################################################
+
+########################################################################
+# Get our icon prefs
+
+[ ! -f "$HOME/.config/wmpipe/icons.conf" ] && cp /etc/wmpipe/icons.conf \
+    $HOME/.config/wmpipe/icons.conf
+. $HOME/.config/wmpipe/icons.conf

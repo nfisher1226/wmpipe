@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>wmpipe: Installation</title>
+<meta name="generator" content="Bluefish 2.2.4" >
+<meta name="author" content="Unknown" >
+<meta name="date" content="2013-07-29T02:48:51-0400" >
+<meta name="copyright" content="Nathan Fisher">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link href="wmpipe.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<a name="top"></a>
+<table align="center" valign="top" border="0" cellpadding="20" cellspacing="6">
+<tr>
+<td valign="top">
+
+<!-- Overview -->
+<h3>Installation</h3>
+
+<p>For the truly impatient, use the infamous "make install" command.</p>
+
+<pre class="userinput">
+<code># make install</code>
+</pre>
+
+<p>This will put the shell function libraries into
+<code>/usr/local/lib/wmpipe</code>, the scripts into
+<code>/usr/local/bin</code>, and the config files in
+<code>/etc/wmpipe</code>.</p>
+
+<p>Finer grained control can be exercised by setting the PREFIX variable. To
+install into <code>/usr/bin</code>:</p>
+
+<pre class="userinput">
+<code># make PREFIX=/usr install</code>
+</pre>
+
+<p>Packagers will be insterested in the DESTDIR variable. To install with the
+normal <code>/usr</code> prefix, into a temporary directory:</p>
+
+<pre class="userinput">
+<code>$ make PREFIX=/usr DESTDIR=pkg install</code>
+</pre>
+
+<p>In addition, you can choose to install just the function libraries.</p>
+
+<pre class="userinput">
+<code># make install-libs</code>
+</pre>
+
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="introduction.html" title=
+          "wmpipe: an Introduction">Prev</a>
+          <p>
+            Introduction
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="usage.html" title="wmpipe: Usage">Next</a>
+          <p>
+            Usage
+          </p>
+        </li>
+      </ul>
+    </div>
+<hr><br /><br />
+</td>
+
+<!-- Links table starts here -->
+      <td style="width: 100px; ">
+      <h3 class="links">Contents</h3>
+		<a href="introduction.html" title="wmpipe: an Introduction">
+		Introduction</a><br>
+		<a href="installation.html" title="wmpipe: Installation">
+		Installation</a><br>
+		<a href="usage.html" title="wmpipe: Usage">
+		Usage</a><br>
+		<a href="scripts.html" title="wmpipe: Scripts">
+		Scripts</a><br>
+      </td>
+<!-- End links table -->
+
+</tr>
+</table>
+</body>
+</html>

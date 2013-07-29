@@ -1,0 +1,130 @@
+body	{	font-family: verdana, tahoma, helvetica, arial, sans-serif;
+			margin-left: 30px;
+			margin-right: 30px;
+			margin-top: 30px;
+			color: rgb(0, 0, 0);
+			background-color: #B2B2B2;	}
+
+img 	{ 	border:		0px;		}
+
+h1	{	letter-spacing: .2em;
+		padding: .2em;
+		text-align:	center;
+		border:	solid gray 1px;	}
+h2	{	letter-spacing:	.2em;
+		padding:		.2em;
+		text-align:	center;
+		border:	solid gray 1px;	}
+h3	{	text-align:	center;
+		border-top: solid gray 1px;
+		border-bottom: solid gray 1px; }
+h4	{	border-top: solid gray 1px;
+		text-align:	center;
+		border-bottom: solid gray 1px;
+	}
+h3.links	{	text-align:	center;
+				border-top: solid gray 1px;
+				border-bottom: solid gray 1px; }
+
+div.important, div.warning, div.caution {
+  color: #600;
+}
+
+hr {	color: gray; }
+
+
+
+/* Monospaced elements */
+tt, code, kbd, pre, .command {
+  font-family: monospace;
+}
+
+pre {
+  background-color: #f2f2f2;
+  border: 1px solid gray;
+  padding: .5em 1em;
+  margin: 0 2em .5em 2em;
+  font-weight: bold;
+}
+
+pre.userinput {
+  color: #101310;
+}
+table	{	text-align: left;
+			width: 85%;	}
+th	{	background-color:	rgb(242, 246, 255);
+		border:	solid gray 1px;	}
+td	{	padding:		15px;
+		background-color:	#ffffff;
+		border:		solid gray 1px;
+		vertical-align: top;	}
+td.content {	background-color: rgb(255, 255, 255);
+					vertical-align: top;
+					text-align: left;
+					padding-left: 18px;
+					padding-right: 18px;
+					padding-top: 15px;
+					padding-bottom: 15px; }
+a	{	text-decoration:	none;	
+		font-weight:	bold;
+		color:  #4C4C4C;		}
+a:hover {	color: #1A1A1A;
+				text-decoration: underline; }
+
+.black	{	color:		#000000;		}
+.blockquote	{ background-color:	e6e6e6;	}
+
+div.alignright {
+	padding: 4px;
+	margin: 0 0 2px 7px;
+	display: inline;
+	}
+
+div.aligncenter {
+	padding: 4px;
+	margin: 0 0 2px 7px;
+	}
+
+.alignright {
+	float: right;
+	text-align: center;
+	}
+
+.aligncenter	{
+	text-align:	center;
+	}
+
+div.navheader ul li.prev, div.navfooter ul li.prev {
+  position: absolute;
+  display: block;
+  left: 0;
+  text-align: left;
+  padding: 0.2em 1em;
+  margin-left: 110px;
+}
+
+div.navheader ul li.next, div.navfooter ul li.next {
+  position: absolute;
+  display: block;
+  text-align: right;
+  right: 5px;
+  padding: 0.2em 0.5em;
+  margin-right: 260px;
+}
+
+div.navheader ul li.prev p, div.navfooter ul li.prev p,
+
+div.navheader ul li.next p, div.navfooter ul li.next p {
+  padding: 0;
+  margin: 1px 0px;
+}
+
+div.navheader ul li.home, div.navheader ul li.up,
+
+div.navfooter ul li.home, div.navfooter ul li.up {
+  text-align: center;
+  padding: 0;
+  margin: 0px auto;
+  display: block;
+  color: #dbddec;
+}

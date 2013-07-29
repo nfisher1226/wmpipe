@@ -18,12 +18,6 @@
 #  MA 02110-1301, USA.
 #
 
-# bring in global prefs
-[ ! -d "$HOME/.config/wmpipe" ] && install -d $HOME/.config/wmpipe
-[ ! -f "$HOME/.config/wmpipe/conf" ] && cp /etc/wmpipe/conf \
-    $HOME/.config/wmpipe/conf
-. $HOME/.config/wmpipe/conf
-
 # Determine which WM we want to format for
 case "$(basename $0)" in
 pekwp.sh)
@@ -39,6 +33,7 @@ esac
 
 # Get our canonical prefix and read in functions
 PREFIX="$(dirname $(dirname $0))"
+. $PREFIX/lib/wmpipe/common.sh
 . $PREFIX/lib/wmpipe/$WM.sh
 
 if [ "$WP_ICONS" = "true" ] ; then

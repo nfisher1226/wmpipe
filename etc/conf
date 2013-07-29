@@ -20,6 +20,11 @@ TERMINAL=lxterminal
 # FILE_HANDLER=rox
 FILE_HANDLER=mimeo
 
+# Calendar program
+CALENDAR=orage
+# CALENDAR=osmo
+# CALENDAR="evolution -c calendar"
+
 # End Global section
 ########################################################################
 

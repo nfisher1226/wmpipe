@@ -28,14 +28,6 @@
 #  MA 02110-1301, USA.
 #
 
-# bring in global prefs
-[ ! -d "$HOME/.config/wmpipe" ] && install -d $HOME/.config/wmpipe
-[ ! -f "$HOME/.config/wmpipe/conf" ] && cp /etc/wmpipe/conf \
-    $HOME/.config/wmpipe/conf
-. $HOME/.config/wmpipe/conf
-
-export MPD_HOST MPD_PORT MPD_CLIENT
-
 # Determine which WM we want to format for
 case "$(basename $0)" in
 pekmpd.sh)
@@ -51,7 +43,10 @@ esac
 
 # Get our canonical prefix and read in functions
 PREFIX="$(dirname $(dirname $0))"
+. $PREFIX/lib/wmpipe/common.sh
 . $PREFIX/lib/wmpipe/$WM.sh
+
+export MPD_HOST MPD_PORT MPD_CLIENT
 
 REPEAT_STATUS=$(mpc | tail -n 1 | cut -f 3 -d ':' | cut -f 2 -d ' ')
 RANDOM_STATUS=$(mpc | tail -n 1 | cut -f 4 -d ':' | cut -f 2 -d ' ')

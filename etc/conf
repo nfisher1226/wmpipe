@@ -60,6 +60,26 @@ MPD_CLIENT_TERMINAL="true"
 # End MPD section
 ########################################################################
 
+#####################################################
+# Places section
+
+# Make the home directory entry a browsable menu
+# Requires ${WM}fb.sh
+BROWSE_HOME=false
+
+# Include ROX-Filer bookmarks
+ROX_BM=false
+
+# Program to open files via mime types
+# FILE_HANDLER=gnome-open
+# FILE_HANDLER=exo-open
+# FILE_HANDLER=xdg-open
+# FILE_HANDLER=rox
+FILE_HANDLER=mimeo
+
+# End Places section
+####################################################
+
 ########################################################################
 # Get our icon prefs
 

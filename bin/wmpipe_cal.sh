@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# pekdate.sh
+# wmpipe_cal.sh
 #
 # Ported to wmpipe from date-menu.sh, an openbox pipe menu.
 # Original comments follow.
@@ -18,19 +18,6 @@
 # If you don't use a mono spaced font, you would have to play with spacing here.
 # It would probably involve a very complicated mess.  Is there a way to force a
 # different font per menu?
-
-# Determine which WM we want to format for
-case "$(basename $0)" in
-pekcal.sh)
-  WM=pekwm
-;;
-icecal.sh)
-  WM=icewm
-;;
-obcal.sh)
-  WM=openbox
-;;
-esac
 
 # Get our canonical prefix and read in functions
 PREFIX="$(dirname $(dirname $0))"

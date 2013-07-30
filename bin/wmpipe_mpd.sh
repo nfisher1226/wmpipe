@@ -1,5 +1,5 @@
 #!/bin/sh
-# Control mpc/mpd from our pekwm menu
+# Control mpc/mpd from our WM menu
 # 06.20.2013 by Nathan Fisher (nfisher dot sr at gmail)
 #
 # There exist already a few such scripts, many of which work quite well.
@@ -27,19 +27,6 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-
-# Determine which WM we want to format for
-case "$(basename $0)" in
-pekmpd.sh)
-  WM=pekwm
-;;
-icempd.sh)
-  WM=icewm
-;;
-obmpd.sh)
-  WM=openbox
-;;
-esac
 
 # Get our canonical prefix and read in functions
 PREFIX="$(dirname $(dirname $0))"

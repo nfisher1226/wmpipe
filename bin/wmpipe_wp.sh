@@ -1,5 +1,5 @@
 #!/bin/sh
-# Sets the background from our $WM menu
+# Sets the background from our WM menu
 # 06.19.2013 by Nathan Fisher (nfisher dot sr at gmail)
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -17,19 +17,6 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-
-# Determine which WM we want to format for
-case "$(basename $0)" in
-pekwp.sh)
-  WM=pekwm
-;;
-icewp.sh)
-  WM=icewm
-;;
-obwp.sh)
-  WM=openbox
-;;
-esac
 
 # Get our canonical prefix and read in functions
 PREFIX="$(dirname $(dirname $0))"

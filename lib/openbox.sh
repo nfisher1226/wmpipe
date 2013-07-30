@@ -88,9 +88,13 @@ EOF
 
 #
 #  name: print_separator
-#  @param
+#  @param label
 #  @return '<separator />'
 #
 print_separator () {
-	echo '  <separator />'
+	if [ "$1" = "" ] ; then
+	  echo '  <separator />'
+	else
+	  echo "  <separator label=\"$@\" />"
+	fi
 }

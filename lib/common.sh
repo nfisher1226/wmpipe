@@ -16,3 +16,16 @@ fi
 . $CONFDIR/icons.conf
 . $HOME/.config/wmpipe/conf
 . $HOME/.config/wmpipe/icons.conf
+
+# Determine which WM we want to format for
+case "$(basename $0)" in
+pek*.sh)
+  WM=pekwm
+;;
+ice*.sh)
+  WM=icewm
+;;
+ob*.sh)
+  WM=openbox
+;;
+esac

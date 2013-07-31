@@ -1,3 +1,4 @@
+-include config.mk
 DESTDIR ?=
 PREFIX ?= /usr/local
 SYSCONFDIR ?= ${DESTDIR}${PREFIX}/etc/wmpipe
@@ -12,10 +13,20 @@ WP_LINKS = icewp.sh obwp.sh pekwp.sh
 BIN_ALL_OBJS = ${BIN_OBJS} ${CAL_LINKS} ${MPD_LINKS} ${PLACES_LINKS} \
 	${WP_LINKS}
 LIB_OBJS = common.sh icewm.sh openbox.sh pekwm.sh
+CONF_OBJS = etc/conf etc/icons.conf
 
-all:
-	@echo "Just type \"make install\"."
+all: ${CONF_OBJS} lib/common.sh
+	@echo "Now type \"make install\"."
 	@echo "Paths can be tuned with DESTDIR and PREFIX variables."
+
+${CONF_OBJS}: config.mk
+
+lib/common.sh: config.mk
+	sed "s%@@SYSCONFDIR@@%${SYSCONFDIR}%" lib/common.sh.in \
+		> lib/common.sh
+
+config.mk:
+	scripts/config.sh
 
 install-conf:
 	install -d ${SYSCONFDIR}

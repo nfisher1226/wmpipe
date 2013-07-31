@@ -1,0 +1,40 @@
+# Global icon definitions go here.
+# The default configuration assumes a standard icon theme is installed
+# into /usr/share/icons. However, feel free to adjust any variables to
+# suit your particular system.
+
+# Name of our icon theme
+ICON_THEME=Smooth-Color
+# Default icon size
+ICON_SIZE=16x16
+# Path to our icons directory
+ICON_PATH=/usr/local/lib/X11/mini-icons
+# Theme path
+PIXMAP_PATH=/usr/local/lib/X11/pixmaps
+# Local icon cache
+LOCAL_ICONS=$HOME/.config/wmpipe/icons
+
+# Media player related icons
+# As of now most of these map to anything useful in Puppy...
+PLAY_ICON="/usr/local/pmusic/themes/Gtk/icon_play.png
+PAUSE_ICON="/usr/share/pixmaps/pidgin/buttons/pause.png
+STOP_ICON="${ICON_PATH}/actions/media-playback-stop.png"
+PREV_ICON="${ICON_PATH}/actions/media-skip-backward.png"
+NEXT_ICON="${ICON_PATH}/actions/media-skip-forward.png"
+REPEAT_ICON="/usr/share/icons/media-playlist-repeat.png"
+RANDOM_ICON="/usr/share/icons/media-playlist-shuffle.png"
+VOLUME_ICON="/usr/local/pmusic/themes/Gtk/volume.png"
+MUTE_ICON="${ICON_PATH}/status/audio-volume-muted.png"
+
+# Filesystem related icons
+TRASH_ICON=${PIXMAP_PATH}/trashcan_empty48.png
+FILE_ICON="${PIXMAP_PATH}/word48.png"
+NETWORK_ICON="/usr/local/apps/pnethood/network-transmit.png"
+DRIVE_ICON="${PIXMAP_PATH}/drive48.png"
+HOME_ICON="${PIXMAP_PATH}/home48.png"
+FOLDER_ICON="${PIXMAP_PATH}/folder24.png"
+
+# File actions related icons
+OPEN_DOC_ICON="${PIXMAP_PATH}/edit48.png"
+CLEAR_ICON="${PIXMAP_PATH}/x24.png"
+REFRESH_ICON="/usr/local/lib/X11/pixmaps/refresh24.png"

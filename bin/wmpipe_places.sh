@@ -21,32 +21,31 @@
 # Get our canonical prefix and read in functions
 PREFIX="$(dirname $(dirname $0))"
 . $PREFIX/lib/wmpipe/common.sh
-. $PREFIX/lib/wmpipe/$WM.sh
 
 # Create our menu with this function
 create_places_menu () {
 begin_${WM}_pipemenu
 [ "$WM" = "openbox" ] && print_separator Places
 # Static places menu
-create_${WM}_menuentry "Filesystem" "$DRIVE_ICON" "$filemanager /"
+create_${WM}_menuentry "Filesystem" "$DRIVE_ICON" "$FILEMANAGER /"
 if [ "$BROWSE_HOME" = "true" ] ; then
   open_${WM}_pipemenu "Home" "$HOME_ICON" "${WM}fb.sh $HOME" 0
 else
-  create_${WM}_menuentry "Home" "$HOME_ICON" "$filemanager $HOME"
+  create_${WM}_menuentry "Home" "$HOME_ICON" "$FILEMANAGER $HOME"
 fi
 
-case $filemanager in
+case $FILEMANAGER in
 rox)
   if [ -d "$HOME/.trash" ] ; then
-    create_${WM}_menuentry "Trash" "$TRASH_ICON" "$filemanager $HOME/.trash"
+    create_${WM}_menuentry "Trash" "$TRASH_ICON" "$FILEMANAGER $HOME/.trash"
   fi
 ;;
 nautilus|thunar)
-  create_${WM}_menuentry "Trash" "$TRASH_ICON" "$filemanager trash:///"
-  create_${WM}_menuentry "Network" "${NETWORK_ICON}" "$filemanager network:///"
+  create_${WM}_menuentry "Trash" "$TRASH_ICON" "$FILEMANAGER trash:///"
+  create_${WM}_menuentry "Network" "${NETWORK_ICON}" "$FILEMANAGER network:///"
 ;;
 pcmanfm)
-  create_${WM}_menuentry "Trash" "$TRASH_ICON" "$filemanager trash:///"
+  create_${WM}_menuentry "Trash" "$TRASH_ICON" "$FILEMANAGER trash:///"
 ;;
 esac
 
@@ -56,7 +55,7 @@ if [ ! "$(mount | grep '/media/')" = "" ] ; then
  print_separator Removable
  for removable in $(mount | grep '/media/' | cut -f 3 -d ' ')
   do
-  create_${WM}_menuentry "$(basename $removable)" "$FOLDER_ICON" "$filemanager ${removable}"
+  create_${WM}_menuentry "$(basename $removable)" "$FOLDER_ICON" "$FILEMANAGER ${removable}"
  done
 fi
 
@@ -71,7 +70,7 @@ do
   else
     LABEL="$(basename $bookmark | sed 's/%20/ /')"
   fi
-  create_${WM}_menuentry "$LABEL" "$FOLDER_ICON" "$filemanager '${bookmark}'"
+  create_${WM}_menuentry "$LABEL" "$FOLDER_ICON" "$FILEMANAGER '${bookmark}'"
 done<$HOME/.gtk-bookmarks
 
 # rox bookmarks
@@ -86,7 +85,7 @@ if [ "$ROX_BM" = "true" ] ; then
   while read LINE ; do
     label="$(echo $LINE | cut -f 1 -d '|')"
     bookmark="$(echo $LINE | cut -f 2 -d '|')"
-    create_${WM}_menuentry "$label" "$FOLDER_ICON" "$filemanager '${bookmark}'"
+    create_${WM}_menuentry "$label" "$FOLDER_ICON" "$FILEMANAGER '${bookmark}'"
   done
 fi
 

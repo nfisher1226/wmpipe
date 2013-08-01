@@ -5,13 +5,16 @@ SYSCONFDIR ?= ${DESTDIR}${PREFIX}/etc/wmpipe
 BINDIR = $(DESTDIR)${PREFIX}/bin
 LIBDIR = $(DESTDIR)${PREFIX}/lib/wmpipe
 
-BIN_OBJS = wmpipe_cal.sh wmpipe_mpd.sh wmpipe_places.sh wmpipe_wp.sh
+BIN_OBJS = wmpipe_cal.sh wmpipe_fb.sh wmpipe_mpd.sh wmpipe_places.sh \
+	wmpipe_wp.sh
 CAL_LINKS = icecal.sh obcal.sh pekcal.sh
+FB_LINKS = icefb.sh obfb.sh pekfb.sh
 MPD_LINKS = icempd.sh obmpd.sh pekmpd.sh
 PLACES_LINKS = iceplaces.sh obplaces.sh pekplaces.sh
 WP_LINKS = icewp.sh obwp.sh pekwp.sh
-BIN_ALL_OBJS = ${BIN_OBJS} ${CAL_LINKS} ${MPD_LINKS} ${PLACES_LINKS} \
+ALL_LINKS= {$CAL_LINKS} ${FB_LINKS} ${MPD_LINKS} ${PLACES_LINKS} \
 	${WP_LINKS}
+BIN_ALL_OBJS = ${BIN_OBJS} ${ALL_LINKS}
 LIB_OBJS = common.sh icewm.sh openbox.sh pekwm.sh
 CONF_OBJS = etc/conf etc/icons.conf
 
@@ -44,6 +47,8 @@ install-sh: install-libs
 		do install -m 755 bin/$${bin} ${BINDIR} ; done
 	for link in ${CAL_LINKS} ; \
 		do ln -sf wmpipe_cal.sh ${BINDIR}/$${link} ; done
+	for link in ${FB_LINKS} ; \
+		do ln -sf wmpipe_fb.sh ${BINDIR}/$${link} ; done
 	for link in ${MPD_LINKS} ; \
 		do ln -sf wmpipe_mpd.sh ${BINDIR}/$${link} ; done
 	for link in ${PLACES_LINKS} ; \

@@ -21,7 +21,6 @@
 # Get our canonical prefix and read in functions
 PREFIX="$(dirname $(dirname $0))"
 . $PREFIX/lib/wmpipe/common.sh
-. $PREFIX/lib/wmpipe/$WM.sh
 
 if [ "$WP_ICONS" = "true" ] ; then
  install -d ~/.config/wmpipe/icons

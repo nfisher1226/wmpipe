@@ -22,7 +22,6 @@
 # Get our canonical prefix and read in functions
 PREFIX="$(dirname $(dirname $0))"
 . $PREFIX/lib/wmpipe/common.sh
-. $PREFIX/lib/wmpipe/$WM.sh
 
 # Make sure the $CALENDAR var isn't empty
 [ "$CALENDAR" = "" ] && CALENDAR=true

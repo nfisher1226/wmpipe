@@ -25,3 +25,4 @@ ob*.sh)
   WM=openbox
 ;;
 esac
+. $PREFIX/lib/wmpipe/$WM.sh

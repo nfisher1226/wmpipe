@@ -27,6 +27,7 @@ PREFIX="$(dirname $(dirname $0))"
 . $PREFIX/lib/wmpipe/common.sh
 
 self=$(realpath $0)
+DIR="$1"
 INODE="$(stat -tc %i "$DIR")"
 FB_CACHE="$HOME/.config/wmpipe/fb_cache"
 DIRS_FILE="$FB_CACHE/${INODE}.dirs"
@@ -49,7 +50,7 @@ begin_${WM}_pipemenu
 PARENT="$(dirname $DIR)"
 if [ ! "$PARENT" = "$DIR" ] ; then
   [ "$WM" = "openbox" ] && print_separator "Parent"
-  open_{$WM}_pipemenu "$PARENT" "$FOLDER_ICON" "$self '$PARENT'" 0
+  open_{$WM}_pipemenu "$PARENT" "$self '$PARENT'" "$FOLDER_ICON" 0
   print_separator "$DIR"
 else
   [ "$WM" = "openbox" ] && print_separator "$DIR"
@@ -68,7 +69,7 @@ if [ ! "$(head -n 1 $DOTDIRS_FILE)" = "" ] && \
     cat $DOTDIRS_FILE | while read SUBDIR
     do
       NEWPIPE="$(basename "$SUBDIR")"
-      open_${WM}_pipemenu "$NEWPIPE" "$FOLDER_ICON" "$self '$SUBDIR'" 0
+      open_${WM}_pipemenu "$NEWPIPE" "$self '$SUBDIR'" "$FOLDER_ICON" 0
     done
   fi
 
@@ -87,7 +88,7 @@ if [ ! "$(head -n 1 $DIRS_FILE)" = "" ] ; then
   cat $DIRS_FILE | while read SUBDIR
   do
     NEWPIPE="$(basename "$SUBDIR")"
-    open_${WM}_pipemenu "$NEWPIPE" "$FOLDER_ICON" "$self '$SUBDIR'"
+    open_${WM}_pipemenu "$NEWPIPE" "$self '$SUBDIR'" "$FOLDER_ICON" 0
   done
 fi
 
@@ -104,7 +105,7 @@ end_${WM}_pipemenu
 
 cache_menu () {
 DIR="$1"
-MENU="${INODE}-${WM}.menu"
+MENU="${FB_CACHE}/${INODE}-${WM}.menu"
 CACHED_MTIME="$2"
 MTIME="$3"
 TEMPFILE="$(mktemp)"
@@ -123,9 +124,10 @@ openbox)
 *)
   create_fb_menu "$DIR" | tee "$MENU"
 ;;
+esac
 grep -v "|${DIR}|" "$HOME/.config/wmpipe/fb_cache/directory" > $TEMPFILE
 echo "|${DIR}|${INODE}|${MTIME}" >> $TEMPFILE
-mv -v $TEMPFILE "$HOME/.config/wmpipe/fb_cache/directory"
+mv $TEMPFILE "$HOME/.config/wmpipe/fb_cache/directory"
 }
 
 case "$1" in
@@ -138,15 +140,17 @@ case "$1" in
 *)
   if [ -d "$1" ] ; then
     DIR="$1"
-    [ ! -d "$HOME/.config/wmpipe/fb_cache" ] && \
-      install -d "$HOME/.config/wmpipe/fb_cache"
-    touch "$HOME/.config/wmpipe/fb_cache/directory"
+    [ ! -d "$FB_CACHE/directory" ] && \
+      install -d "$FB_CACHE/directory"
+    touch "$FB_CACHE/directory"
     DIR="$1"
     MTIME="$(stat -tc %y "$DIR")"
-    CACHED_MTIME="$(grep "|${DIR}|" "$HOME/.config/wmpipe/fb_cache/directory" \
+    CACHED_MTIME="$(grep "|${INODE}|" "$FB_CACHE/directory" \
       | cut -f 4 -d '|')"
-    if [ ! "$MTIME" = $"CACHED_MTIME" ] ; then
+    if [ ! "$MTIME" = "$CACHED_MTIME" ] ; then
       cache_menu "$DIR" "$CACHED_MTIME" "$MTIME"
+    else
+      cat ${FB_CACHE}/${INODE}-${WM}.menu
     fi
   fi
 ;;

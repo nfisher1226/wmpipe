@@ -1,9 +1,9 @@
 -include config.mk
 DESTDIR ?=
 PREFIX ?= /usr/local
-SYSCONFDIR ?= ${DESTDIR}${PREFIX}/etc/wmpipe
-BINDIR = $(DESTDIR)${PREFIX}/bin
-LIBDIR = $(DESTDIR)${PREFIX}/lib/wmpipe
+SYSCONFDIR ?= ${PREFIX}/etc/wmpipe
+BINDIR = ${PREFIX}/bin
+LIBDIR = ${PREFIX}/lib/wmpipe
 
 BIN_OBJS = wmpipe_cal.sh wmpipe_fb.sh wmpipe_mpd.sh wmpipe_places.sh \
 	wmpipe_wp.sh
@@ -18,55 +18,64 @@ BIN_ALL_OBJS = ${BIN_OBJS} ${ALL_LINKS}
 LIB_OBJS = common.sh icewm.sh openbox.sh pekwm.sh
 CONF_OBJS = etc/conf etc/icons.conf
 
-all: ${CONF_OBJS} lib/common.sh
+all: lib/common.sh config.mk ${CONF_OBJS}
 	@echo "Now type \"make install\"."
-	@echo "Paths can be tuned with DESTDIR and PREFIX variables."
 
-${CONF_OBJS}: config.mk
+etc/conf:
+	if [ "${PUPPY}" = "true" ] ; \
+		then cp etc/puppylinux.conf etc/conf ; \
+			else cp etc/generic.conf etc/conf ; fi
+etc/icons.conf:
+	if [ "${PUPPY}" = "true" ] ; \
+		then cp etc/puppylinux-icons.conf etc/icons.conf ; \
+			else cp etc/generic-icons.conf etc/icons.conf ; fi
 
-lib/common.sh: config.mk
+config.mk:
+	echo PREFIX = ${PREFIX} > config.mk
+
+lib/common.sh:
 	sed "s%@@SYSCONFDIR@@%${SYSCONFDIR}%" lib/common.sh.in \
 		> lib/common.sh
 
-config.mk:
-	scripts/config.sh
-
 install-conf:
-	install -d ${SYSCONFDIR}
-	install -m 644 etc/conf ${SYSCONFDIR}
-	install -m 644 etc/icons.conf ${SYSCONFDIR}
+	install -d ${DESTDIR}${SYSCONFDIR}
+	install -m 644 etc/conf ${DESTDIR}${SYSCONFDIR}
+	install -m 644 etc/icons.conf ${DESTDIR}${SYSCONFDIR}
 
 install-libs: install-conf
-	install -d ${LIBDIR}
+	install -d ${DESTDIR}${LIBDIR}
 	for lib in ${LIB_OBJS} ; \
-		do install -m 644 lib/$${lib} ${LIBDIR} ; done
+		do install -m 644 lib/$${lib} ${DESTDIR}${LIBDIR} ; done
 
 install-sh: install-libs
-	install -d ${BINDIR}
+	install -d ${DESTDIR}${BINDIR}
 	for bin in ${BIN_OBJS} ; \
-		do install -m 755 bin/$${bin} ${BINDIR} ; done
+		do install -m 755 bin/$${bin} ${DESTDIR}${BINDIR} ; done
 	for link in ${CAL_LINKS} ; \
-		do ln -sf wmpipe_cal.sh ${BINDIR}/$${link} ; done
+		do ln -sf wmpipe_cal.sh ${DESTDIR}${BINDIR}/$${link} ; done
 	for link in ${FB_LINKS} ; \
-		do ln -sf wmpipe_fb.sh ${BINDIR}/$${link} ; done
+		do ln -sf wmpipe_fb.sh ${DESTDIR}${BINDIR}/$${link} ; done
 	for link in ${MPD_LINKS} ; \
-		do ln -sf wmpipe_mpd.sh ${BINDIR}/$${link} ; done
+		do ln -sf wmpipe_mpd.sh ${DESTDIR}${BINDIR}/$${link} ; done
 	for link in ${PLACES_LINKS} ; \
-		do ln -sf wmpipe_places.sh ${BINDIR}/$${link} ; done
+		do ln -sf wmpipe_places.sh ${DESTDIR}${BINDIR}/$${link} ; done
 	for link in ${WP_LINKS} ; \
-		do ln -sf wmpipe_wp.sh ${BINDIR}/$${link} ; done
+		do ln -sf wmpipe_wp.sh ${DESTDIR}${BINDIR}/$${link} ; done
 
 install: install-sh
 
 uninstall-bin:
 	for obj in ${BIN_ALL_OBJS} ; \
-		do rm -rf ${BINDIR}/$${obj} ; done
+		do rm -rf ${DESTDIR}${BINDIR}/$${obj} ; done
 
 uninstall: uninstall-bin
 	for obj in ${LIB_OBJS} ; \
-		do rm -rf ${LIBDIR}/$${obj} ; done
-	rm -f ${SYSCONFDIR}/conf
-	rm -f ${SYSCONFDIR}/icons.conf
+		do rm -rf ${DESTDIR}${LIBDIR}/$${obj} ; done
+	rm -f ${DESTDIR}${SYSCONFDIR}/conf
+	rm -f ${DESTDIR}${SYSCONFDIR}/icons.conf
+
+clean:
+	rm -f config.mk lib/common.sh ${CONF_OBJS}
 
 .PHONY: install-conf install-libs install-sh install uninstall-bin \
-	uninstall
+	uninstall clean

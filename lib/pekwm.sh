@@ -68,7 +68,7 @@ open_pekwm_pipemenu () {
 	cat << EOF
 Submenu = "$TITLE"
   { Icon = "$ICON"
-    Entry { Actions = "Dynamic '$COMMAND'" }
+    Entry { Actions = "Dynamic $COMMAND" }
   }
 EOF
 }

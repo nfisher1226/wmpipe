@@ -29,7 +29,7 @@ begin_${WM}_pipemenu
 # Static places menu
 create_${WM}_menuentry "Filesystem" "$DRIVE_ICON" "$FILEMANAGER /"
 if [ "$BROWSE_HOME" = "true" ] ; then
-  open_${WM}_pipemenu "Home" "$HOME_ICON" "${WM}fb.sh $HOME" 0
+  open_${WM}_pipemenu "Home" "${ABBR}fb.sh '$HOME'" "$HOME_ICON" 0
 else
   create_${WM}_menuentry "Home" "$HOME_ICON" "$FILEMANAGER $HOME"
 fi

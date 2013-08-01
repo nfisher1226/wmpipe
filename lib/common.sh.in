@@ -17,12 +17,15 @@ CONFDIR="@@SYSCONFDIR@@/wmpipe"
 case "$(basename $0)" in
 pek*.sh)
   WM=pekwm
+  ABBR=pek
 ;;
 ice*.sh)
   WM=icewm
+  ABBR=ice
 ;;
 ob*.sh)
   WM=openbox
+  ABBR=ob
 ;;
 esac
 . $PREFIX/lib/wmpipe/$WM.sh

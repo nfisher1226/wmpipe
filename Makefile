@@ -1,7 +1,7 @@
 -include config.mk
 DESTDIR ?=
 PREFIX ?= /usr/local
-SYSCONFDIR ?= ${PREFIX}/etc/wmpipe
+SYSCONFDIR ?= ${PREFIX}/etc
 BINDIR = ${PREFIX}/bin
 LIBDIR = ${PREFIX}/lib/wmpipe
 
@@ -32,15 +32,16 @@ etc/icons.conf:
 
 config.mk:
 	echo PREFIX = ${PREFIX} > config.mk
+	echo SYSCONFDIR = ${SYSCONFDIR} >> config.mk
 
 lib/common.sh:
 	sed "s%@@SYSCONFDIR@@%${SYSCONFDIR}%" lib/common.sh.in \
 		> lib/common.sh
 
 install-conf:
-	install -d ${DESTDIR}${SYSCONFDIR}
-	install -m 644 etc/conf ${DESTDIR}${SYSCONFDIR}
-	install -m 644 etc/icons.conf ${DESTDIR}${SYSCONFDIR}
+	install -d ${DESTDIR}${SYSCONFDIR}/wmpipe
+	install -m 644 etc/conf ${DESTDIR}${SYSCONFDIR}/wmpipe
+	install -m 644 etc/icons.conf ${DESTDIR}${SYSCONFDIR}/wmpipe
 
 install-libs: install-conf
 	install -d ${DESTDIR}${LIBDIR}
@@ -71,8 +72,8 @@ uninstall-bin:
 uninstall: uninstall-bin
 	for obj in ${LIB_OBJS} ; \
 		do rm -rf ${DESTDIR}${LIBDIR}/$${obj} ; done
-	rm -f ${DESTDIR}${SYSCONFDIR}/conf
-	rm -f ${DESTDIR}${SYSCONFDIR}/icons.conf
+	rm -f ${DESTDIR}${SYSCONFDIR}/wmpipe/conf
+	rm -f ${DESTDIR}${SYSCONFDIR}/wmpipe/icons.conf
 
 clean:
 	rm -f config.mk lib/common.sh ${CONF_OBJS}

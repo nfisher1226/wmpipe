@@ -44,7 +44,7 @@ begin_openbox_submenu () {
 	TITLE="$1"
 	ICON="$2"
 	ID="$3"
-	echo "  <menu id=\"$ID\" label=\"$TITLE\" icon=\"$ICON\">"
+	echo "  <menu id=\"$TITLE\" label=\"$TITLE\" icon=\"$ICON\">"
 }
 
 #  name: end_openbox_submenu
@@ -65,7 +65,7 @@ open_openbox_pipemenu () {
 	TITLE="$1"
 	COMMAND="$2"
 	ICON="$3"
-	echo "  <menu id=\"pipemenu: $TITLE\" label=\"TITLE\" execute=\"$COMMAND\"/>"
+	echo "  <menu id=\"pipemenu: $TITLE\" label=\"$TITLE\" execute=\"$COMMAND\"/>"
 }
 
 #  name: create_openbox_menuentry

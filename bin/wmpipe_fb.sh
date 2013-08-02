@@ -29,11 +29,13 @@ PREFIX="$(dirname $(dirname $0))"
 self="$0"
 DIR="$1"
 INODE="$(stat -tc %i "$DIR")"
+FS="$(df --output=source "$DIR" | tail -n 1 | cut -f 3 -d '/')"
 FB_CACHE="$HOME/.config/wmpipe/fb_cache"
-DIRS_FILE="$FB_CACHE/${INODE}.dirs"
-FILES_FILE="$FB_CACHE/${INODE}.files"
-DOTDIRS_FILE="$FB_CACHE/${INODE}.dotdirs"
-DOTFILES_FILE="$FB_CACHE/${INODE}.dotfiles"
+MENU="${FB_CACHE}/${FS-}-${INODE}-${WM}.menu"
+DIRS_FILE="$FB_CACHE/${FS}-${INODE}.dirs"
+FILES_FILE="$FB_CACHE/${FS}-${INODE}.files"
+DOTDIRS_FILE="$FB_CACHE/${FS}-${INODE}.dotdirs"
+DOTFILES_FILE="$FB_CACHE/${FS}-${INODE}.dotfiles"
 [ ! -d "$FB_CACHE" ] && install -d "$FB_CACHE"
 [ ! -f "$FB_CACHE/directory" ] && touch "$FB_CACHE/directory"
 
@@ -51,7 +53,7 @@ DIR="$1"
 begin_${WM}_pipemenu
 PARENT="$(dirname $DIR)"
 if [ ! "$DIR" = "$PARENT" ] ; then
-  [ "$WM" = "openbox" ] && print_separator "Parent"
+  [ "$WM" = "openbox" ] && print_separator "$PARENT"
   open_${WM}_pipemenu "$PARENT" "$self '$PARENT'" "$FOLDER_ICON" 0
   print_separator "$DIR"
 else
@@ -64,7 +66,7 @@ create_${WM}_menuentry "Bookmark $DIR" "$BOOKMARK_ICON" "$self --bookmark '$DIR'
 
 if [ ! "$(head -n 1 $DOTDIRS_FILE)" = "" ] && \
   [ ! "$(head -n 1 $DOTFILES_FILE)" = "" ] ; then
-  begin_${WM}_submenu "hidden" "$FOLDER_ICON"
+  begin_${WM}_submenu "hidden" "$FOLDER_ICON" "HIDDEN"
 
   if [ ! "$(head -n 1 $DOTDIRS_FILE)" = "" ] ; then
     [ "$WM" = "openbox" ] && print_separator Directories
@@ -108,7 +110,6 @@ end_${WM}_pipemenu
 
 cache_menu () {
 DIR="$1"
-MENU="${FB_CACHE}/${INODE}-${WM}.menu"
 CACHED_MTIME="$2"
 MTIME="$3"
 TEMPFILE="$(mktemp)"
@@ -130,7 +131,7 @@ openbox)
 esac
 touch $HOME/.config/wmpipe/fb_cache/directory
 grep -v "|${DIR}|" "$FB_CACHE/directory" > $TEMPFILE
-echo "|${DIR}|${INODE}|${MTIME}" >> $TEMPFILE
+echo "|${DIR}|${FS}|${INODE}|${MTIME}" >> $TEMPFILE
 mv $TEMPFILE "$FB_CACHE/directory"
 }
 
@@ -144,17 +145,19 @@ case "$1" in
 *)
   if [ -d "$1" ] ; then
     DIR="$1"
-    [ ! -d "$FB_CACHE/directory" ] && \
-      install -d "$FB_CACHE/directory"
+    [ ! -d "$FB_CACHE" ] && \
+      install -d "$FB_CACHE"
     touch "$FB_CACHE/directory"
     DIR="$1"
     MTIME="$(stat -tc %y "$DIR")"
-    CACHED_MTIME="$(grep "|${INODE}|" "$FB_CACHE/directory" \
-      | cut -f 4 -d '|')"
+    CACHED_MTIME="$(grep "|${FS}|${INODE}|" "$FB_CACHE/directory" \
+      | cut -f 5 -d '|')"
     if [ ! "$MTIME" = "$CACHED_MTIME" ] ; then
       cache_menu "$DIR" "$CACHED_MTIME" "$MTIME"
+    elif [ ! -f "${FB_CACHE}/${FS}-${INODE}-${WM}.menu" ] ; then
+      create_fb_menu "$DIR" | tee "$MENU"
     else
-      cat ${FB_CACHE}/${INODE}-${WM}.menu
+      cat ${FB_CACHE}/${FS}-${INODE}-${WM}.menu
     fi
   fi
 ;;

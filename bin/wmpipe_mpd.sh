@@ -77,7 +77,7 @@ begin_${WM}_pipemenu
 create_${WM}_menuentry "$MPD_MSG" "$MPD_ICON" "${TERMCMD}${MPD_CLIENT}"
 print_separator
 # Volume submenu
-begin_${WM}_submenu "$(mpc volume | sed 's/ 0%/ [muted]/')" "$VOLUME_ICON"
+begin_${WM}_submenu "$(mpc volume | sed 's/ 0%/ [muted]/')" "$VOLUME_ICON" "VOLUME"
 create_${WM}_menuentry "100%" - "mpc volume 100"
 create_${WM}_menuentry "85%" - "mpc volume 85"
 create_${WM}_menuentry "70%" - "mpc volume 70"
@@ -89,7 +89,7 @@ print_separator
 create_${WM}_menuentry "mute" "$MUTE_ICON" "mpc volume 0"
 end_${WM}_submenu
 # Playlists submenu
-begin_${WM}_submenu "Playlist" "$FILE_ICON"
+begin_${WM}_submenu "Playlist" "$FILE_ICON" "PLAYLIST"
 mpc lsplaylists | while read playlist
 do
  create_${WM}_menuentry "$playlist" - "mpc load ${playlist}"

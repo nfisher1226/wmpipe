@@ -1,0 +1,13 @@
+For the extremely impatient:
+  # make install
+
+This installs everything into /usr/local by default. For better control use
+the following variables:
+  PREFIX	The installation prefix
+  SYSCONFDIR	The location of the system wide config files
+  DESTDIR	Specifies a directory to prepend to the installation paths,
+		useful for packagers.
+
+So to create a package directory in $PWD/pkg that has a /usr prefix and /etc for config files (normal paths on Linux) use the following command:
+  $ make DESTDIR=$PWD/pkg PREFIX=/usr SYSCONFDIR=/etc install
+

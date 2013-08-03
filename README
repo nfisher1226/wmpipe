@@ -1,0 +1,4 @@
+wmpipe - A shell function library for the creation of dynamic (pipe) Window
+Manager menus, currently supporting icewm, pekwm, and openbox. Also a set of
+example pipemenu scripts utilizing the library demonstrating the common
+syntax and configuration possibilities.

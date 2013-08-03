@@ -85,7 +85,7 @@ if [ "$ROX_BM" = "true" ] ; then
   while read LINE ; do
     label="$(echo $LINE | cut -f 1 -d '|')"
     bookmark="$(echo $LINE | cut -f 2 -d '|')"
-    create_${WM}_menuentry "$label" "$FOLDER_ICON" "$FILEMANAGER '${bookmark}'"
+    create_${WM}_menuentry "$label" "$FOLDER_ICON" "rox '${bookmark}'"
   done
 fi
 

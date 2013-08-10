@@ -22,19 +22,16 @@
 PREFIX="$(dirname $(dirname $0))"
 . $PREFIX/lib/wmpipe/common.sh
 
-if [ "$WP_ICONS" = "true" ] ; then
- install -d ~/.config/wmpipe/icons
-fi
+[ "$WP_ICONS" = "true" ] && [ ! -d "$HOME/.config/wmpipe/icons" ] && \
+  install -d ~/.config/wmpipe/icons
 
 # This function actually creates the menu
 create_wp_menu () {
 begin_${WM}_pipemenu
-for WP in $(find ${WP_DIRS} -type f)
-do
-NAME=$(basename ${WP} | cut -f 1 -d '.')
-if [ "$WP_ICONS" = "true" ] ; then
- ICON="$HOME/.config/wmpipe/icons/${NAME}.png"
-fi
+$(find ${WP_DIRS} -type f) | \
+while read WP
+do NAME=$(basename ${WP} | cut -f 1 -d '.')
+[ "$WP_ICONS" = "true" ] && ICON="$HOME/.config/wmpipe/icons/${NAME}.png"
 create_${WM}_menuentry "$NAME" "$ICON" "$WP_SETCMD '$WP'"
 done
 
@@ -47,20 +44,16 @@ end_${WM}_pipemenu
 
 case $1 in
 cache_icons)
-  for WP in $(find ${WP_DIRS} -type f)
-  do
-    NAME=$(basename ${WP} | cut -f 1 -d '.')
+  $(find ${WP_DIRS} -type f) | \
+  while read WP
+  do NAME=$(basename ${WP} | cut -f 1 -d '.')
     convert -resize 64x40 $WP ~/.config/wmpipe/icons/${NAME}.png
   done
 ;;
 *)
   case $WM in
-  openbox)
-    create_wp_menu | sed 's@&@&amp;@g'
-  ;;
-  *)
-    create_wp_menu
-  ;;
+  openbox) create_wp_menu | sed 's@&@&amp;@g' ;;
+  *) create_wp_menu ;;
   esac
 ;;
 esac

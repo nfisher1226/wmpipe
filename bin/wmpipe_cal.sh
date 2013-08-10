@@ -24,7 +24,7 @@ PREFIX="$(dirname $(dirname $0))"
 . $PREFIX/lib/wmpipe/common.sh
 
 # Make sure the $CALENDAR var isn't empty
-[ "$CALENDAR" = "" ] && CALENDAR=true
+[[ -z "$CALENDAR" ]] && CALENDAR=true
 
 function calRow() {
   cal | gawk -v row=$1 '{ if (NR==row) { print $0 } }'

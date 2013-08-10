@@ -36,9 +36,8 @@ fi
 
 case $FILEMANAGER in
 rox)
-  if [ -d "$HOME/.trash" ] ; then
+  [ -d "$HOME/.trash" ] && \
     create_${WM}_menuentry "Trash" "$TRASH_ICON" "$FILEMANAGER $HOME/.trash"
-  fi
 ;;
 nautilus|thunar)
   create_${WM}_menuentry "Trash" "$TRASH_ICON" "$FILEMANAGER trash:///"
@@ -64,7 +63,7 @@ print_separator "Gtk Bookmarks"
 while read bookmark
 do
   SETNAME="$(echo $bookmark | cut -s -f 2- -d ' ')"
-  if [ ! "$SETNAME" = "" ] ; then
+  if [[ -z "$SETNAME" ]] ; then
     LABEL="$SETNAME"
     bookmark="$(echo $bookmark | cut -f 1 -d ' ' | sed 's/%20/ /')"
   else

@@ -28,7 +28,7 @@ PREFIX="$(dirname $(dirname $0))"
 # This function actually creates the menu
 create_wp_menu () {
 begin_${WM}_pipemenu
-$(find ${WP_DIRS} -type f) | \
+find ${WP_DIRS} -type f | \
 while read WP
 do NAME=$(basename ${WP} | cut -f 1 -d '.')
 [ "$WP_ICONS" = "true" ] && ICON="$HOME/.config/wmpipe/icons/${NAME}.png"

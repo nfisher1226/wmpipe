@@ -6,14 +6,15 @@ BINDIR = ${PREFIX}/bin
 LIBDIR = ${PREFIX}/lib/wmpipe
 
 BIN_OBJS = wmpipe_cal.sh wmpipe_fb.sh wmpipe_mpd.sh wmpipe_places.sh \
-	wmpipe_wp.sh
+	wmpipe_webmarks.sh wmpipe_wp.sh
 CAL_LINKS = icecal.sh obcal.sh pekcal.sh
 FB_LINKS = icefb.sh obfb.sh pekfb.sh
 MPD_LINKS = icempd.sh obmpd.sh pekmpd.sh
 PLACES_LINKS = iceplaces.sh obplaces.sh pekplaces.sh
+WEBMARK_LINKS = icewebmarks.sh obwebmarks.sh pekwebmarks.sh
 WP_LINKS = icewp.sh obwp.sh pekwp.sh
 ALL_LINKS= {$CAL_LINKS} ${FB_LINKS} ${MPD_LINKS} ${PLACES_LINKS} \
-	${WP_LINKS}
+	${WEBMARK_LINKS} ${WP_LINKS}
 BIN_ALL_OBJS = ${BIN_OBJS} ${ALL_LINKS}
 LIB_OBJS = common.sh icewm.sh openbox.sh pekwm.sh
 CONF_OBJS = etc/conf etc/icons.conf
@@ -60,14 +61,18 @@ install-sh: install-libs
 		do ln -sf wmpipe_mpd.sh ${DESTDIR}${BINDIR}/$${link} ; done
 	for link in ${PLACES_LINKS} ; \
 		do ln -sf wmpipe_places.sh ${DESTDIR}${BINDIR}/$${link} ; done
+	for link in ${WEBMARK_LINKS} ; \
+		do ln -sf wmpipe_webmarks.sh ${DESTDIR}${BINDIR}/$${link} ; done
 	for link in ${WP_LINKS} ; \
 		do ln -sf wmpipe_wp.sh ${DESTDIR}${BINDIR}/$${link} ; done
 
-install: install-sh
+install: all install-sh
 
 uninstall-bin:
 	for obj in ${BIN_ALL_OBJS} ; \
 		do rm -rf ${DESTDIR}${BINDIR}/$${obj} ; done
+	for link in ${ALL_LINKS} ; \
+		do rm -rf ${DESTDIR}${BINDIR}/$${link} ; done
 
 uninstall: uninstall-bin
 	for obj in ${LIB_OBJS} ; \

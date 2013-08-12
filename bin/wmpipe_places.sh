@@ -63,12 +63,12 @@ print_separator "Gtk Bookmarks"
 while read bookmark
 do
   SETNAME="$(echo $bookmark | cut -s -f 2- -d ' ')"
-  if [[ -z "$SETNAME" ]] ; then
+  if [ ! "$SETNAME" = "" ] ; then
     LABEL="$SETNAME"
-    bookmark="$(echo $bookmark | cut -f 1 -d ' ' | sed 's/%20/ /')"
   else
     LABEL="$(basename $bookmark | sed 's/%20/ /')"
   fi
+  bookmark="$(echo $bookmark | cut -f 1 -d ' ' | sed 's/%20/ /')"
   create_${WM}_menuentry "$LABEL" "$FOLDER_ICON" "$FILEMANAGER '${bookmark}'"
 done<$HOME/.gtk-bookmarks
 

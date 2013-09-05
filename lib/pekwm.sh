@@ -65,12 +65,10 @@ open_pekwm_pipemenu () {
 	TITLE="$1"
 	COMMAND="$2"
 	ICON="$3"
-	cat << EOF
-Submenu = "$TITLE"
-  { Icon = "$ICON"
-    Entry { Actions = "Dynamic $COMMAND" }
-  }
-EOF
+	echo "Submenu = \"$TITLE\"
+  { Icon = \"$ICON\"
+    Entry { Actions = \"Dynamic $COMMAND\" }
+  }"
 }
 
 #  name: create_pekwm_menuentry
@@ -82,10 +80,8 @@ create_pekwm_menuentry () {
 	TITLE="$1"
 	ICON="$2"
 	COMMAND="$3"
-	cat << EOF
-  Entry = "$TITLE"
-    { Icon = "$ICON"; Actions = "Exec $COMMAND &" }
-EOF
+	echo "Entry = \"$TITLE\"
+    { Icon = \"$ICON\"; Actions = \"Exec $COMMAND &\" }"
 }
 
 #

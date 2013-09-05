@@ -77,13 +77,11 @@ create_openbox_menuentry () {
 	TITLE="$1"
 	ICON="$2"
 	COMMAND="$3"
-	cat << EOF
-    <item label="$TITLE" icon="$ICON">
-      <action name="Execute">
+	echo "<item label=\"$TITLE\" icon=\"$ICON\">
+      <action name=\"Execute\">
         <command>$COMMAND</command>
       </action>
-    </item>
-EOF
+    </item>"
 }
 
 #

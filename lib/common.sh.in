@@ -14,7 +14,7 @@ CONFDIR="@@SYSCONFDIR@@/wmpipe"
 . $HOME/.config/wmpipe/icons.conf
 
 # Determine which WM we want to format for
-case "$(basename $0)" in
+case "${SELF##*/}" in
 pek*.sh)
   WM=pekwm
   ABBR=pek

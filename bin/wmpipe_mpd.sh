@@ -29,7 +29,9 @@
 #
 
 # Get our canonical prefix and read in functions
-PREFIX="$(dirname $(dirname $0))"
+SELF="$0"
+BINDIR="${SELF%/*}"
+PREFIX="${BINDIR%/*}"
 . $PREFIX/lib/wmpipe/common.sh
 
 export MPD_HOST MPD_PORT MPD_CLIENT

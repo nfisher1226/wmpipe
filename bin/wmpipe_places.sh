@@ -19,7 +19,9 @@
 #
 
 # Get our canonical prefix and read in functions
-PREFIX="$(dirname $(dirname $0))"
+SELF="$0"
+BINDIR="${SELF%/*}"
+PREFIX="${BINDIR%/*}"
 . $PREFIX/lib/wmpipe/common.sh
 
 # Create our menu with this function

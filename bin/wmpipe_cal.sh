@@ -20,7 +20,9 @@
 # different font per menu?
 
 # Get our canonical prefix and read in functions
-PREFIX="$(dirname $(dirname $0))"
+SELF="$0"
+BINDIR="${SELF%/*}"
+PREFIX="${BINDIR%/*}"
 . $PREFIX/lib/wmpipe/common.sh
 
 # Make sure the $CALENDAR var isn't empty

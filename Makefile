@@ -32,8 +32,8 @@ etc/icons.conf:
 			else cp etc/generic-icons.conf etc/icons.conf ; fi
 
 config.mk:
-	echo PREFIX = ${PREFIX} > config.mk
-	echo SYSCONFDIR = ${SYSCONFDIR} >> config.mk
+	echo PREFIX ?= ${PREFIX} > config.mk
+	echo SYSCONFDIR ?= ${SYSCONFDIR} >> config.mk
 
 lib/common.sh:
 	sed "s%@@SYSCONFDIR@@%${SYSCONFDIR}%" lib/common.sh.in \
@@ -70,18 +70,19 @@ install: all install-sh
 
 uninstall-bin:
 	for obj in ${BIN_ALL_OBJS} ; \
-		do rm -rf ${DESTDIR}${BINDIR}/$${obj} ; done
+		do unlink ${DESTDIR}${BINDIR}/$${obj} ; done
 	for link in ${ALL_LINKS} ; \
-		do rm -rf ${DESTDIR}${BINDIR}/$${link} ; done
+		do unlink ${DESTDIR}${BINDIR}/$${link} ; done
 
 uninstall: uninstall-bin
 	for obj in ${LIB_OBJS} ; \
-		do rm -rf ${DESTDIR}${LIBDIR}/$${obj} ; done
-	rm -f ${DESTDIR}${SYSCONFDIR}/wmpipe/conf
-	rm -f ${DESTDIR}${SYSCONFDIR}/wmpipe/icons.conf
+		do unlink ${DESTDIR}${LIBDIR}/$${obj} ; done
+	unlink ${DESTDIR}${SYSCONFDIR}/wmpipe/conf
+	unlink ${DESTDIR}${SYSCONFDIR}/wmpipe/icons.conf
 
 clean:
-	rm -f config.mk lib/common.sh ${CONF_OBJS}
+	for obj in config.mk lib/common.sh ${CONF_OBJS} ; \
+		do unlink $${obj} ; done
 
 .PHONY: install-conf install-libs install-sh install uninstall-bin \
 	uninstall clean

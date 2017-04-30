@@ -13,7 +13,7 @@ MPD_LINKS = icempd.sh obmpd.sh pekmpd.sh
 PLACES_LINKS = iceplaces.sh obplaces.sh pekplaces.sh
 WEBMARK_LINKS = icewebmarks.sh obwebmarks.sh pekwebmarks.sh
 WP_LINKS = icewp.sh obwp.sh pekwp.sh
-ALL_LINKS= {$CAL_LINKS} ${FB_LINKS} ${MPD_LINKS} ${PLACES_LINKS} \
+ALL_LINKS= ${CAL_LINKS} ${FB_LINKS} ${MPD_LINKS} ${PLACES_LINKS} \
 	${WEBMARK_LINKS} ${WP_LINKS}
 BIN_ALL_OBJS = ${BIN_OBJS} ${ALL_LINKS}
 LIB_OBJS = common.sh icewm.sh openbox.sh pekwm.sh
@@ -39,7 +39,7 @@ lib/common.sh:
 	sed "s%@@SYSCONFDIR@@%${SYSCONFDIR}%" lib/common.sh.in \
 		> lib/common.sh
 
-install-conf:
+install-conf: all
 	install -d ${DESTDIR}${SYSCONFDIR}/wmpipe
 	install -m 644 etc/conf ${DESTDIR}${SYSCONFDIR}/wmpipe
 	install -m 644 etc/icons.conf ${DESTDIR}${SYSCONFDIR}/wmpipe
@@ -69,20 +69,25 @@ install-sh: install-libs
 install: all install-sh
 
 uninstall-bin:
-	for obj in ${BIN_ALL_OBJS} ; \
-		do unlink ${DESTDIR}${BINDIR}/$${obj} ; done
+	for obj in ${BIN_OBJS} ; \
+		do [ -f ${DESTDIR}${BINDIR}/$${obj} ] && \
+		unlink ${DESTDIR}${BINDIR}/$${obj} || true ; done
 	for link in ${ALL_LINKS} ; \
-		do unlink ${DESTDIR}${BINDIR}/$${link} ; done
+		do [ -L ${DESTDIR}${BINDIR}/$${link} ] && \
+		unlink ${DESTDIR}${BINDIR}/$${link} || true ; done
 
 uninstall: uninstall-bin
 	for obj in ${LIB_OBJS} ; \
-		do unlink ${DESTDIR}${LIBDIR}/$${obj} ; done
-	unlink ${DESTDIR}${SYSCONFDIR}/wmpipe/conf
-	unlink ${DESTDIR}${SYSCONFDIR}/wmpipe/icons.conf
+		do [ -f ${DESTDIR}${LIBDIR}/$${obj} ] && \
+		unlink ${DESTDIR}${LIBDIR}/$${obj} || true ; done
+	[ -f ${DESTDIR}${SYSCONFDIR}/wmpipe/conf ] && \
+		unlink ${DESTDIR}${SYSCONFDIR}/wmpipe/conf || true
+	[ -f ${DESTDIR}${SYSCONFDIR}/wmpipe/icons.conf ] && \
+		unlink ${DESTDIR}${SYSCONFDIR}/wmpipe/icons.conf || true
 
 clean:
 	for obj in config.mk lib/common.sh ${CONF_OBJS} ; \
-		do unlink $${obj} ; done
+		do [ -f $${obj} ] && unlink $${obj} || true ; done
 
 .PHONY: install-conf install-libs install-sh install uninstall-bin \
 	uninstall clean

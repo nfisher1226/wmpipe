@@ -28,13 +28,27 @@ PREFIX="${BINDIR%/*}"
 . $PREFIX/lib/wmpipe/common.sh
 
 dwb_bmks () {
-  begin_${WM}_submenu "DWB" "/usr/share/pixmaps/dwb.png"
-  while read bm
-  do name="$(echo $bm | cut -f 2- -d ' ')"
-    url="$(echo $bm | cut -f 1 -d ' ')"
-    create_${WM}_menuentry "$name" - "dwb $url"
-  done<$HOME/.config/dwb/default/bookmarks
-  end_${WM}_submenu
+  if [[ -f "$HOME/.config/dwb/default/bookmarks" ]] ; then
+    begin_${WM}_submenu "DWB" "/usr/share/pixmaps/dwb.png"
+    while read bm
+    do name=$(cut -f 2- -d ' ' <<< $bm)
+      url=$(cut -f 1 -d ' ' <<< $bm)
+      create_${WM}_menuentry "$(rev <<< $name)" - "dwb $(rev <<< $url)"
+    done <<< $(rev $HOME/.config/dwb/default/bookmarks)
+    end_${WM}_submenu
+  fi
+}
+
+qutebrowser_bmks () {
+  if [[ -f "$HOME/.config/qutebrowser/quickmarks" ]] ; then
+    begin_${WM}_submenu "Qutebrowser" "/usr/share/pixmaps/qutebrowser.png"
+    while read bm
+    do name=$(cut -f 2- -d ' ' <<< $bm)
+      url=$(cut -f 1 -d ' ' <<< $bm)
+      create_${WM}_menuentry "$(rev <<< $name)" - "qutebrowser $(rev <<< $url)"
+    done <<< $(rev $HOME/.config/qutebrowser/quickmarks)
+    end_${WM}_submenu
+  fi
 }
 
 midori_bmks () {
@@ -46,17 +60,17 @@ midori_bmks () {
   fi
   if [[ ! -z $BDB ]] ; then
     begin_${WM}_submenu "Midori" "/usr/share/icons/hicolor/16x16/apps/midori.png"
-    sqlite3 $BDB 'select uri from bookmarks' | \
     while read URI
       do FIXEDURI=$(sed "s%'%''%g" <<< "$URI")
       TITLE="$(sqlite3 $BDB "select title from bookmarks where uri='$FIXEDURI'")"
       create_${WM}_menuentry "$TITLE" "-" "midori $URI"
-    done
+    done <<< "$(sqlite3 $BDB 'select uri from bookmarks')"
     end_${WM}_pipemenu
   fi
 }
 
 begin_${WM}_pipemenu
 dwb_bmks
+qutebrowser_bmks
 midori_bmks
 end_${WM}_pipemenu

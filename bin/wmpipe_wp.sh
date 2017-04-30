@@ -30,12 +30,11 @@ PREFIX="${BINDIR%/*}"
 # This function actually creates the menu
 create_wp_menu () {
 begin_${WM}_pipemenu
-find ${WP_DIRS} -type f | \
 while read WP
 do NAME=$(basename ${WP} | cut -f 1 -d '.')
 [ "$WP_ICONS" = "true" ] && ICON="$HOME/.config/wmpipe/icons/${NAME}.png"
 create_${WM}_menuentry "$NAME" "$ICON" "$WP_SETCMD '$WP'"
-done
+done <<< "$(find ${WP_DIRS} -type f)"
 
 if [ "$WP_ICONS" = "true" ] ; then
 print_separator
@@ -46,11 +45,10 @@ end_${WM}_pipemenu
 
 case $1 in
 cache_icons)
-  $(find ${WP_DIRS} -type f) | \
   while read WP
   do NAME=$(basename ${WP} | cut -f 1 -d '.')
     convert -resize 64x40 $WP ~/.config/wmpipe/icons/${NAME}.png
-  done
+  done <<< "$(find ${WP_DIRS} -type f)"
 ;;
 *)
   case $WM in

@@ -24,6 +24,9 @@ BINDIR="${SELF%/*}"
 PREFIX="${BINDIR%/*}"
 . $PREFIX/lib/wmpipe/common.sh
 
+cache=$HOME/.cache/wmpipe/icons
+[ -d $cache ] || install -d $cache
+
 [ "$WP_ICONS" = "true" ] && [ ! -d "$HOME/.config/wmpipe/icons" ] && \
   install -d ~/.config/wmpipe/icons
 
@@ -32,7 +35,7 @@ create_wp_menu () {
 begin_${WM}_pipemenu
 while read WP
 do NAME=$(basename ${WP} | cut -f 1 -d '.')
-[ "$WP_ICONS" = "true" ] && ICON="$HOME/.config/wmpipe/icons/${NAME}.png"
+[ "$WP_ICONS" = "true" ] && ICON="${cache}/${NAME}.png"
 create_${WM}_menuentry "$NAME" "$ICON" "$WP_SETCMD '$WP'"
 done <<< "$(find ${WP_DIRS} -type f)"
 
@@ -47,7 +50,7 @@ case $1 in
 cache_icons)
   while read WP
   do NAME=$(basename ${WP} | cut -f 1 -d '.')
-    convert -resize 64x40 $WP ~/.config/wmpipe/icons/${NAME}.png
+    convert -resize 64x40 $WP ${cache}/${NAME}.png
   done <<< "$(find ${WP_DIRS} -type f)"
 ;;
 *)

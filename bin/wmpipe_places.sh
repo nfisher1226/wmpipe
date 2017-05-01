@@ -90,6 +90,11 @@ if [ "$ROX_BM" = "true" ] ; then
   done
 fi
 
+# Webmarks, if the user wishes
+if [ "$WEB_BM" = "true" ] ; then
+  open_${WM}_pipemenu "Web Bookmarks" "${ABBR}webmarks.sh" "$WEBMARK_ICON"
+fi
+
 print_separator Recent
 begin_${WM}_submenu "Recent" "$OPEN_DOC_ICON" "RECENT"
 grep "href=\"file" ${HOME}/.local/share/recently-used.xbel | \

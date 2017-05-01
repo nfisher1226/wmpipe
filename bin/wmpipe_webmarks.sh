@@ -29,25 +29,23 @@ PREFIX="${BINDIR%/*}"
 
 dwb_bmks () {
   if [[ -f "$HOME/.config/dwb/default/bookmarks" ]] ; then
-    begin_${WM}_submenu "DWB" "/usr/share/pixmaps/dwb.png"
+    print_separator DWB
     while read bm
     do name=$(cut -f 2- -d ' ' <<< $bm)
       url=$(cut -f 1 -d ' ' <<< $bm)
       create_${WM}_menuentry "$(rev <<< $name)" - "dwb $(rev <<< $url)"
     done <<< $(rev $HOME/.config/dwb/default/bookmarks)
-    end_${WM}_submenu
   fi
 }
 
 qutebrowser_bmks () {
   if [[ -f "$HOME/.config/qutebrowser/quickmarks" ]] ; then
-    begin_${WM}_submenu "Qutebrowser" "/usr/share/pixmaps/qutebrowser.png"
+    print_separator Qutebrowser
     while read bm
     do name=$(cut -f 2- -d ' ' <<< $bm)
       url=$(cut -f 1 -d ' ' <<< $bm)
       create_${WM}_menuentry "$(rev <<< $name)" - "qutebrowser $(rev <<< $url)"
     done <<< $(rev $HOME/.config/qutebrowser/quickmarks)
-    end_${WM}_submenu
   fi
 }
 
@@ -59,13 +57,12 @@ midori_bmks () {
     then BDB=$DIR/bookmarks.db
   fi
   if [[ ! -z $BDB ]] ; then
-    begin_${WM}_submenu "Midori" "/usr/share/icons/hicolor/16x16/apps/midori.png"
+    print_separator Midori
     while read URI
       do FIXEDURI=$(sed "s%'%''%g" <<< "$URI")
       TITLE="$(sqlite3 $BDB "select title from bookmarks where uri='$FIXEDURI'")"
       create_${WM}_menuentry "$TITLE" "-" "midori $URI"
     done <<< "$(sqlite3 $BDB 'select uri from bookmarks')"
-    end_${WM}_pipemenu
   fi
 }
 

@@ -123,7 +123,7 @@ begin_${WM}_submenu "System" "$CATEGORY_SYS_ICON" "SYSTEM"
 while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
-done<<< $(egrep -v "${exclude_sys}" ${cache}/sys)
+done<<<$(egrep -v "${exclude_sys}" ${cache}/sys)
 end_${WM}_submenu
 
 end_${WM}_pipemenu

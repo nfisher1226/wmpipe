@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>wmpipe: Included Scripts</title>
+<meta name="generator" content="Bluefish 2.2.10" >
+<meta name="author" content="Unknown" >
+<meta name="date" content="2017-05-01T15:06:57-0400" >
+<meta name="copyright" content="Nathan Fisher">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link href="wmpipe.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<a name="top"></a>
+<table align="center" valign="top" border="0" cellpadding="20" cellspacing="6">
+<tr>
+<td valign="top">
+
+<!-- Overview -->
+<h3>Included Scripts</h3>
+
+<h4>Applications menu</h4>
+<h5>pekappmenu.sh | obappmenu.sh | iceappmenu.sh</h5>
+<p>Probably the most used/requested pipe menu for any wm is an applications menu. There are
+numerous implementations of this concept and I have used many, hacked quite a few and
+continuously been frustrated when they stop working due to ABI changes (C), unicode errors
+(Python) and lots or other quirks. So I decided, partially out of frustration and partially
+for the challenge of it, to implement a solution in a shell script. Haha.</p>
+
+<p>This little gem actually works surprisingly well within the constraints of it's design. It
+is by no means a full-featured design and the menu it generates is not xdg compliant,
+even though it functions by scanning the .desktop files in /usr/share/applications. The layout
+does not follow the xdg spec by using xml menu definition files and .directory files but is
+instead hard coded. Nevertheless the menus it creates are eminently usable and complete, and
+there is some provision for customization in that applications can be excluded from showing up
+via config file settings.</p>
+
+<p>The first run will be extremely slow as each .desktop file must be scanned and processed
+(around 4s on my computer). Each run thereafter is very quick as it builds a cache in ~/.cache
+for it's data. If the contents of /usr/share/applications are changed then the cache will be
+rebuilt.</p>
+
+<h4>Places</h4>
+<h5>pekplaces.sh | obplaces.sh | iceplaces.sh</h5>
+<p>The idea of this script is to replicate the "Places" submenu ala gnome2. The menu
+includes entries for your home directory, the full filesystem, gtk bookmarks and recently
+used files. Optionally you can also make the home directory a browsable submenu via the
+filebrowser script and include bookmarks from ROX-Filer via config file options.</p>
+
+<h4>Filebrowser</h4>
+<h5>pekfb.sh | obfb.sh | icefb.sh</h5>
+<p>This script creates a browsable filesystem tree allowing you to navigate the unix
+filesystem from your wm menu. Within each directory there are options to open the
+default filemanager, open a terminal here, and open files using the default applications
+as governed by the filehandler chosen in the config file. Can be used in conjunction with
+the "Places" pipemenu to make your home directory a browseable submenu.</p>
+
+<h4>MPD</h4>
+<h5>pekmpd.sh | obmpd.sh | icempd.sh</h5>
+<p>Control MPD (Music Player daemon) from your wm menu. Supports basic functionality like
+playing, pausing, skipping forward and back, volume control. Does not replace a full client
+as there is no provision for building playlists.</p>
+
+<h4>Wallpaper</h4>
+<h5>pekwp.sh | obwp.sh | icewp.sh</h5>
+<p>Set your desktop wallpaper from the wm menu. Very handy.</p>
+
+<h4>Webmarks</h4>
+<h5>pekwebmarks.sh | obwebmarks.sh | icewebmarks.sh</h5>
+<p>Quick access to bookmarks from certain web browsers. Currently only Midori, DWB and
+qutebrowser are supported. To be developed further...</p>
+
+<h4>Calendar</h4>
+<h5>pekcal.sh | obcal.sh | icecal.sh</h5>
+<p>Displays a simple calendar in your wm menu.</p>
+
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="installation.html" title=
+          "wmpipe: Usage">Prev</a>
+          <p>
+            Introduction
+          </p>
+        </li>
+      </ul>
+    </div>
+<hr><br /><br />
+</td>
+
+<!-- Links table starts here -->
+      <td style="width: 100px; ">
+      <h3 class="links">Contents</h3>
+		<a href="introduction.html" title="wmpipe: an Introduction">
+		Introduction</a><br>
+		<a href="installation.html" title="wmpipe: Installation">
+		Installation</a><br>
+		<a href="usage.html" title="wmpipe: Usage">
+		Usage</a><br>
+		<a href="scripts.html" title="wmpipe: Included Scripts">
+		Scripts</a><br>
+      </td>
+<!-- End links table -->
+
+</tr>
+</table>
+</body>
+</html>

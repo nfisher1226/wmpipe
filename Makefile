@@ -6,15 +6,16 @@ BINDIR = ${PREFIX}/bin
 LIBDIR = ${PREFIX}/lib/wmpipe
 
 BIN_OBJS = wmpipe_cal.sh wmpipe_fb.sh wmpipe_mpd.sh wmpipe_places.sh \
-	wmpipe_webmarks.sh wmpipe_wp.sh
+	wmpipe_webmarks.sh wmpipe_wp.sh wmpipe_appmenu.sh
 CAL_LINKS = icecal.sh obcal.sh pekcal.sh
 FB_LINKS = icefb.sh obfb.sh pekfb.sh
 MPD_LINKS = icempd.sh obmpd.sh pekmpd.sh
 PLACES_LINKS = iceplaces.sh obplaces.sh pekplaces.sh
 WEBMARK_LINKS = icewebmarks.sh obwebmarks.sh pekwebmarks.sh
 WP_LINKS = icewp.sh obwp.sh pekwp.sh
+APPMENU_LINKS = iceappmenu.sh obappmenu.sh pekappmenu.sh
 ALL_LINKS= ${CAL_LINKS} ${FB_LINKS} ${MPD_LINKS} ${PLACES_LINKS} \
-	${WEBMARK_LINKS} ${WP_LINKS}
+	${WEBMARK_LINKS} ${WP_LINKS} ${APPMENU_LINKS}
 BIN_ALL_OBJS = ${BIN_OBJS} ${ALL_LINKS}
 LIB_OBJS = common.sh icewm.sh openbox.sh pekwm.sh
 CONF_OBJS = etc/conf etc/icons.conf
@@ -65,6 +66,8 @@ install-sh: install-libs
 		do ln -sf wmpipe_webmarks.sh ${DESTDIR}${BINDIR}/$${link} ; done
 	for link in ${WP_LINKS} ; \
 		do ln -sf wmpipe_wp.sh ${DESTDIR}${BINDIR}/$${link} ; done
+	for link in ${APPMENU_LINKS} ; \
+		do ln -sf wmpipe_appmenu.sh ${DESTDIR}${BINDIR}/$${link} ; done
 
 install: all install-sh
 

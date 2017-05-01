@@ -54,11 +54,13 @@ if [ /usr/share/applications -nt $cache ]
     fi
     if [ ! -f ${cache}/$(basename ${app}) ]
       then egrep -m 3 "^Name=|^Icon=|^Exec=" $app \
-      | sed -e 's%Name=%Name="%g' -e 's%Icon=%Icon="%g' -e 's%Exec=%Exec="%g' \
-      -e s/$/\"/ > ${cache}/$(basename ${app})
+      | sed -e 's%Name=%Name="%g' -e 's%Icon=%Icon="%g' -e \
+        's%Exec=%Exec="%g' -e s/$/\"/ > ${cache}/$(basename ${app})
       . ${cache}/$(basename ${app})
       echo Icon=$(find /usr/share/icons/*/16x16 /usr/share/pixmaps \
         -name ${Icon}.png | head -n 1) >> ${cache}/$(basename ${app})
+      sed -i -e 's/%f//' -e 's/%F//' -e 's/%u//' -e 's/%U//' \
+        ${cache}/$(basename ${app})
     fi
   done<<<$apps
 fi
@@ -66,47 +68,42 @@ fi
 begin_${WM}_pipemenu
 
 begin_${WM}_submenu "Development" "$CATEGORY_DEV_ICON" "DEVELOPMENT"
-echo '  Icon = "/usr/share/icons/gnome/16x16/categories/applications-development.png"'
+echo "  Icon = \"${CATEGORY_DEV_ICON}\""
 while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
 done<<<$(egrep -v "${exclude_dev}" ${cache}/dev)
 end_${WM}_submenu
 
-echo '  Submenu = "Graphics" {'
-echo '  Icon = "/usr/share/icons/gnome/16x16/categories/applications-graphics.png"'
+begin_${WM}_submenu "Graphics" "$CATEGORY_GPH_ICON" "GRAPHICS"
 while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
 done<<<$(egrep -v "${exclude_gph}" ${cache}/gph)
 end_${WM}_submenu
 
-echo '  Submenu = "Multimedia" {'
-echo '  Icon = "/usr/share/icons/gnome/16x16/categories/applications-multimedia.png"'
+begin_${WM}_submenu "Multimedia" "$CATEGORY_MMD_ICON" "MULTIMEDIA"
 while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
 done<<<$(egrep -v "${exclude_mmd}" ${cache}/mmd)
 end_${WM}_submenu
 
-echo '  Submenu = "Network" {'
-echo '  Icon = "/usr/share/icons/gnome/16x16/categories/applications-internet.png"'
+begin_${WM}_submenu "Network" "$CATEGORY_NET_ICON" "NETWORK"
 while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
 done<<<$(egrep -v "${exclude_net}" ${cache}/net)
 end_${WM}_submenu
 
-echo '  Submenu = "Settings" {'
-echo '  Icon = "/usr/share/icons/gnome/16x16/categories/preferences-system.png"'
+begin_${WM}_submenu "Settings" "$CATEGORY_SET_ICON" "SETTINGS"
 while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
 done<<<$(egrep -v "${exclude_set}" ${cache}/set)
 end_${WM}_submenu
 
-echo '  Submenu = "System" {'
-echo '  Icon = "/usr/share/icons/gnome/16x16/categories/applications-system.png"'
+begin_${WM}_submenu "System" "$CATEGORY_SYS_ICON" "SYSTEM"
 while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"

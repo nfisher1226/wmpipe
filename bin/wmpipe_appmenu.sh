@@ -34,33 +34,47 @@ PREFIX="${BINDIR%/*}"
 
 cache=$HOME/.cache/wmpipe/xdg
 # Setup our cache if it doesn't exist or is out of date
-if [ /usr/share/applications -nt $cache ]
-  then [ -d $cache ] || install -d $cache
-  rm -rf ${cache}/*
+if [ /usr/share/applications -nt $cache ] ; then
+  if [ -d $cache ] ; then
+    # Remove any stale entries
+    ls -1 ${cache}/*.desktop | while read app ; do
+      if [ ! -f /usr/share/applications/$(basename ${app}) ] ; then
+        rm -rf ${app}
+        app=$(basename ${app})
+        sed -i "/$app/ d" ${cache}/dev ${cache}/gph ${cache}/mmd \
+          ${cache}/net ${cache}/set ${cache}/sys
+      fi
+    done
+  else
+    # Create the cache if it doesn't exist
+    install -d $cache
+  fi
   # only want .desktop files of type "Application"
-  apps=$(grep 'Type=Application' /usr/share/applications/* | cut -f 1 -d ':')
+  apps=$(grep 'Type=Application' /usr/share/applications/*.desktop | \
+    cut -f 1 -d ':')
   while read app
   # Sort all this shit into categories
-  do cts=$(grep Categories= $app)
-    if [ ! $(egrep "Development|TextEditor"<<<$cts) = "" ]
-      then echo $(basename ${app}) >> ${cache}/dev
-    elif [ ! "$(grep Graphics<<<$cts)" = "" ]
-      then echo $(basename ${app}) >> ${cache}/gph
-    elif [ ! $(egrep "Multimedia|Audio|Video"<<<$cts) = "" ]
-      then echo $(basename ${app}) >> ${cache}/mmd
-    elif [ ! "$(grep Network<<<$cts)" = "" ]
-      then echo $(basename ${app}) >> ${cache}/net
-    elif [ ! "$(grep Settings<<<$cts)" = "" ]
-      then echo $(basename ${app}) >> ${cache}/set
-    elif [ ! "$(grep System<<<$cts)" = "" ]
-      then echo $(basename ${app}) >> ${cache}/sys
-    else
-      true
-    fi
-    if [ ! -f ${cache}/$(basename ${app}) ]
+  do
+    if [ ! -f ${cache}/$(basename ${app}) ] ; then
+      cts=$(grep Categories= $app)
+      if [ ! $(egrep "Development|TextEditor"<<<$cts) = "" ]
+        then echo $(basename ${app}) >> ${cache}/dev
+      elif [ ! "$(grep Graphics<<<$cts)" = "" ]
+        then echo $(basename ${app}) >> ${cache}/gph
+      elif [ ! $(egrep "Multimedia|Audio|Video"<<<$cts) = "" ]
+        then echo $(basename ${app}) >> ${cache}/mmd
+      elif [ ! "$(grep Network<<<$cts)" = "" ]
+        then echo $(basename ${app}) >> ${cache}/net
+      elif [ ! "$(grep Settings<<<$cts)" = "" ]
+        then echo $(basename ${app}) >> ${cache}/set
+      elif [ ! "$(grep System<<<$cts)" = "" ]
+        then echo $(basename ${app}) >> ${cache}/sys
+      else
+        true
+      fi
       # Take only the info we want and make it sh sourceable
-      then egrep -m 3 "^Name=|^Icon=|^Exec=" $app \
-      | sed -e 's%Name=%Name="%g' -e 's%Icon=%Icon="%g' -e \
+      egrep -m 3 "^Name=|^Icon=|^Exec=" $app \
+        | sed -e 's%Name=%Name="%g' -e 's%Icon=%Icon="%g' -e \
         's%Exec=%Exec="%g' -e s/$/\"/ > ${cache}/$(basename ${app})
       # Source the resulting file
       . ${cache}/$(basename ${app})

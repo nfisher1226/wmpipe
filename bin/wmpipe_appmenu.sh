@@ -61,6 +61,8 @@ if [ /usr/share/applications -nt $cache ] ; then
         then echo $(basename ${app}) >> ${cache}/dev
       elif [ ! "$(grep Graphics<<<$cts)" = "" ]
         then echo $(basename ${app}) >> ${cache}/gph
+      elif [ ! "$(grep Office<<<$cts)" = "" ]
+        then echo $(basename ${app}) >> ${cache}/ofc
       elif [ ! $(egrep "Multimedia|Audio|Video"<<<$cts) = "" ]
         then echo $(basename ${app}) >> ${cache}/mmd
       elif [ ! "$(grep Network<<<$cts)" = "" ]
@@ -107,6 +109,13 @@ while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
 done<<<$(egrep -v "${exclude_gph}" ${cache}/gph)
+end_${WM}_submenu
+
+begin_${WM}_submenu "Office" "$CATEGORY_OFC_ICON" "OFFICE"
+while read app
+do . ${cache}/${app}
+  create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
+done<<<$(egrep -v "${exclude_ofc}" ${cache}/ofc)
 end_${WM}_submenu
 
 begin_${WM}_submenu "Multimedia" "$CATEGORY_MMD_ICON" "MULTIMEDIA"

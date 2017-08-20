@@ -44,8 +44,15 @@ qutebrowser_bmks () {
     while read bm
     do name=$(cut -f 2- -d ' ' <<< $bm)
       url=$(cut -f 1 -d ' ' <<< $bm)
-      create_${WM}_menuentry "$(rev <<< $name)" - "qutebrowser $(rev <<< $url)"
+      create_${WM}_menuentry "$(rev <<< $name) - $(rev <<< $url)" - "qutebrowser $(rev <<< $url)"
     done <<< $(rev $HOME/.config/qutebrowser/quickmarks)
+  fi
+  if [[ -f "$HOME/.config/qutebrowser/bookmarks/urls" ]] ; then
+    while read bm
+    do name="$(cut -f 2- -d ' ' <<< $bm | cut -b 1-50)"
+      url="$(cut -f 1 -d ' ' <<< $bm)"
+      create_${WM}_menuentry "${name}" - "qutebrowser ${url}"
+    done < $HOME/.config/qutebrowser/bookmarks/urls
   fi
 }
 

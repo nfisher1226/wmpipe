@@ -90,7 +90,7 @@ if [ ${APPS_DIR} -nt $cache ] ; then
         find ${ICON_BASEDIR}/*/${ICON_SIZE} \
         ${ICON_BASEDIR}/hicolor/${ICON_SIZE}/apps/ \
         ${ICON_BASEDIR}/hicolor/*/apps/ \
-        ${PIXMAP_DIR} -name ${Icon}.png | head -n 1 >> \
+        ${PIXMAP_DIR} -iname ${Icon}.* | head -n 1 >> \
         ${cache}/$(basename ${app})
       fi
       # Do some extra processing to remove %f|F|u|U and insert the full

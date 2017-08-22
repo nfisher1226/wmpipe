@@ -83,10 +83,16 @@ if [ ${APPS_DIR} -nt $cache ] ; then
       # Source the resulting file
       . ${cache}/$(basename ${app})
       # Get the full path to the proper icon
-      NewIcon=${ICON_BASEDIR}/hicolor/${ICON_SIZE}/apps/${Icon}.png
-      [ -f $NewIcon ] || NewIcon=$(find ${ICON_BASEDIR}/*/${ICON_SIZE} \
-        ${PIXMAP_DIR} -name ${Icon}.png | head -n 1) >> \
+      echo -n Icon= >> ${cache}/$(basename ${app})
+      if [ -f $Icon ] ; then
+        echo $Icon >> ${cache}/$(basename ${app})
+      else
+        find ${ICON_BASEDIR}/*/${ICON_SIZE} \
+        ${ICON_BASEDIR}/hicolor/${ICON_SIZE}/apps/ \
+        ${ICON_BASEDIR}/hicolor/*/apps/ \
+        ${PIXMAP_DIR} -name ${Icon}.png | head -n 1 >> \
         ${cache}/$(basename ${app})
+      fi
       # Do some extra processing to remove %f|F|u|U and insert the full
       # icon path
       sed -i -e 's/%f//' -e 's/%F//' -e 's/%u//' -e 's/%U//' \

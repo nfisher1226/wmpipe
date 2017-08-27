@@ -42,7 +42,7 @@ if [ ${APPS_DIR} -nt $cache ] ; then
         rm -rf ${app}
         app=$(basename ${app})
         sed -i "/$app/ d" ${cache}/dev ${cache}/gph ${cache}/mmd \
-          ${cache}/net ${cache}/set ${cache}/sys
+          ${cache}/net ${cache}/set ${cache}/sys ${cache}/uti
       fi
     done
   else
@@ -83,19 +83,20 @@ if [ ${APPS_DIR} -nt $cache ] ; then
       # Source the resulting file
       . ${cache}/$(basename ${app})
       # Get the full path to the proper icon
-      echo -n Icon= >> ${cache}/$(basename ${app})
       if [ -f $Icon ] ; then
-        echo $Icon >> ${cache}/$(basename ${app})
+        echo Icon=${Icon} >> ${cache}/$(basename ${app})
       else
-        find ${ICON_BASEDIR}/*/${ICON_SIZE} \
+        echo -n Icon= >> ${cache}/$(basename ${app})
+        find ${ICON_PATH}/apps/ \
         ${ICON_BASEDIR}/hicolor/${ICON_SIZE}/apps/ \
         ${ICON_BASEDIR}/hicolor/*/apps/ \
+        ${ICON_BASEDIR}/*/${ICON_SIZE}/ \
         ${PIXMAP_DIR} -iname "${Icon}*" | head -n 1 >> \
         ${cache}/$(basename ${app})
       fi
       # Do some extra processing to remove %f|F|u|U
       sed -i -e 's/%f//' -e 's/%F//' -e 's/%u//' -e 's/%U//' \
-        ${cache}/$(basename ${app})
+        -e 's/%//' ${cache}/$(basename ${app})
     fi
   done<<<$apps
 fi
@@ -104,7 +105,6 @@ fi
 begin_${WM}_pipemenu
 
 begin_${WM}_submenu "Development" "$CATEGORY_DEV_ICON" "DEVELOPMENT"
-echo "  Icon = \"${CATEGORY_DEV_ICON}\""
 while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"

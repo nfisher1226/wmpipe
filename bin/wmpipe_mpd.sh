@@ -34,36 +34,37 @@ BINDIR="${SELF%/*}"
 PREFIX="${BINDIR%/*}"
 . $PREFIX/lib/wmpipe/common.sh
 
-export MPD_HOST MPD_PORT MPD_CLIENT
+MPC="MPD_HOST=${MPD_HOST} mpc"
+export MPD_HOST MPD_PORT MPD_CLIENT MPC
 
-REPEAT_STATUS=$(mpc | tail -n 1 | cut -f 3 -d ':' | cut -f 2 -d ' ')
-RANDOM_STATUS=$(mpc | tail -n 1 | cut -f 4 -d ':' | cut -f 2 -d ' ')
+REPEAT_STATUS=$(${MPC} | tail -n 1 | cut -f 3 -d ':' | cut -f 2 -d ' ')
+RANDOM_STATUS=$(${MPC} | tail -n 1 | cut -f 4 -d ':' | cut -f 2 -d ' ')
 [ "$MPD_CLIENT_TERMINAL" = "true" ] && TERMCMD="$TERMINAL -e "
 
 mpd_playbutton () {
-  create_${WM}_menuentry "Play" "$PLAY_ICON" "mpc play"
+  create_${WM}_menuentry "Play" "$PLAY_ICON" "${MPC} play"
 }
 mpd_pausebutton () {
-  create_${WM}_menuentry "Pause" "$PAUSE_ICON" "mpc pause"
+  create_${WM}_menuentry "Pause" "$PAUSE_ICON" "${MPC} pause"
 }
 mpd_stopbutton () {
-  create_${WM}_menuentry "Stop" "$STOP_ICON" "mpc stop"
+  create_${WM}_menuentry "Stop" "$STOP_ICON" "${MPC} stop"
 }
 mpd_otherbuttons () {
-  create_${WM}_menuentry "Previous" "$PREV_ICON" "mpc prev"
-  create_${WM}_menuentry "Next" "$NEXT_ICON" "mpc next"
+  create_${WM}_menuentry "Previous" "$PREV_ICON" "${MPC} prev"
+  create_${WM}_menuentry "Next" "$NEXT_ICON" "${MPC} next"
   print_separator
-  create_${WM}_menuentry "Toggle Repeat" "$REPEAT_ICON" "mpc repeat"
-  create_${WM}_menuentry "Toggle Random" "$RANDOM_ICON" "mpc random"
+  create_${WM}_menuentry "Toggle Repeat" "$REPEAT_ICON" "${MPC} repeat"
+  create_${WM}_menuentry "Toggle Random" "$RANDOM_ICON" "${MPC} random"
 }
 
-MPD_CURRENT=$(mpc current)
+MPD_CURRENT=$(${MPC} current)
 if [ "$MPD_CURRENT" = "" ] ; then
  MPD_MSG="Stopped"
  MPD_STATE=stopped
  MPD_ICON="$STOP_ICON"
 else
- if [ "$(mpc | grep 'paused')" = "" ] ; then
+ if [ "$(${MPC} | grep 'paused')" = "" ] ; then
   MPD_STATE=playing
   MPD_ICON="$PLAY_ICON"
  else
@@ -76,28 +77,28 @@ fi
 # Actually print the menu with this function
 create_mpd_menu () {
 begin_${WM}_pipemenu
-create_${WM}_menuentry "$MPD_MSG" "$MPD_ICON" "${TERMCMD}${MPD_CLIENT}"
+create_${WM}_menuentry "$MPD_MSG" "$MPD_ICON" "${TERMCMD}MPD_HOST=${MPD_HOST} ${MPD_CLIENT}"
 print_separator
 # Volume submenu
-begin_${WM}_submenu "$(mpc volume | sed 's/ 0%/ [muted]/')" "$VOLUME_ICON" "VOLUME"
-create_${WM}_menuentry "100%" - "mpc volume 100"
-create_${WM}_menuentry "85%" - "mpc volume 85"
-create_${WM}_menuentry "70%" - "mpc volume 70"
-create_${WM}_menuentry "55%" - "mpc volume 55"
-create_${WM}_menuentry "40%" - "mpc volume 40"
-create_${WM}_menuentry "25%" - "mpc volume 25"
-create_${WM}_menuentry "15%" - "mpc volume 15"
+begin_${WM}_submenu "$(${MPC} volume | sed 's/ 0%/ [muted]/')" "$VOLUME_ICON" "VOLUME"
+create_${WM}_menuentry "100%" - "${MPC} volume 100"
+create_${WM}_menuentry "85%" - "${MPC} volume 85"
+create_${WM}_menuentry "70%" - "${MPC} volume 70"
+create_${WM}_menuentry "55%" - "${MPC} volume 55"
+create_${WM}_menuentry "40%" - "${MPC} volume 40"
+create_${WM}_menuentry "25%" - "${MPC} volume 25"
+create_${WM}_menuentry "15%" - "${MPC} volume 15"
 print_separator
-create_${WM}_menuentry "mute" "$MUTE_ICON" "mpc volume 0"
+create_${WM}_menuentry "mute" "$MUTE_ICON" "${MPC} volume 0"
 end_${WM}_submenu
 # Playlists submenu
 begin_${WM}_submenu "Playlist" "$FILE_ICON" "PLAYLIST"
 mpc lsplaylists | while read playlist
 do
- create_${WM}_menuentry "$playlist" - "mpc load ${playlist}"
+ create_${WM}_menuentry "$playlist" - "${MPC} load ${playlist}"
 done
 print_separator
-create_${WM}_menuentry "Clear" "$CLEAR_ICON" "mpc clear"
+create_${WM}_menuentry "Clear" "$CLEAR_ICON" "${MPC} clear"
 end_${WM}_submenu
 # Show our controls
 case $MPD_STATE in
@@ -115,7 +116,7 @@ paused)
 ;;
 esac
 print_separator
-create_${WM}_menuentry "Update Database" "$REFRESH_ICON" "mpc refresh"
+create_${WM}_menuentry "Update Database" "$REFRESH_ICON" "${MPC} refresh"
 end_${WM}_pipemenu
 }
 

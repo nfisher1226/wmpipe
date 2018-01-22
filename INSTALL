@@ -8,6 +8,10 @@ the following variables:
   DESTDIR	Specifies a directory to prepend to the installation paths,
 		useful for packagers.
 
-So to create a package directory in $PWD/pkg that has a /usr prefix and /etc for config files (normal paths on Linux) use the following command:
+So to create a package directory in $PWD/pkg that has a /usr prefix and 
+/etc for config files (normal paths on Linux) use the following command:
   $ make DESTDIR=$PWD/pkg PREFIX=/usr SYSCONFDIR=/etc install
 
+The script config.sh will make an educated guess based on your operating
+system:
+  $ ./scripts/config.sh

@@ -1,4 +1,5 @@
-#!/bin/sh
+#!@@SHELL@@
+#
 # Creates an applications menu using .desktop files to find only the
 # applications installed on your system. The generated menu is functional
 # but is not xdg compliant, as .directory and menu files are ignored and

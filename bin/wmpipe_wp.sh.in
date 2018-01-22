@@ -1,4 +1,5 @@
-#!/bin/sh
+#!@@SHELL@@
+#
 # Sets the background from our WM menu
 # 06.19.2013 by Nathan Fisher (nfisher dot sr at gmail)
 #

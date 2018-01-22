@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@@SHELL@@
 #
 # wmpipe_cal.sh
 #
@@ -45,4 +45,3 @@ create_${WM}_menuentry "$(calRow 6)" - "$CALENDAR"
 create_${WM}_menuentry "$(calRow 7)" - "$CALENDAR"
 create_${WM}_menuentry "$(calRow 8)" - "$CALENDAR"
 end_${WM}_pipemenu
-

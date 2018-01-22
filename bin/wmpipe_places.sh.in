@@ -1,4 +1,5 @@
-#!/bin/bash
+#!@@SHELL@@
+#
 # Simple places script for your WM menu
 # 06.20.2013 by Nathan Fisher (nfisher dot sr at gmail)
 #
@@ -121,4 +122,3 @@ openbox)
   create_places_menu
 ;;
 esac
-

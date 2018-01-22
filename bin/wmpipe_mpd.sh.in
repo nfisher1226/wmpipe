@@ -1,4 +1,5 @@
-#!/bin/sh
+#!@@SHELL@@
+#
 # Control mpc/mpd from our WM menu
 # 06.20.2013 by Nathan Fisher (nfisher dot sr at gmail)
 #

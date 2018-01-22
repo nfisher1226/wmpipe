@@ -3,14 +3,14 @@
 case $(uname -s) in
 *Linux*)
   if [ -x "/usr/pkg/bmake" ] # Linux pkgsrc
-    then echo PREFIX = /usr/pkg > config.mk ; fi
+    then echo PREFIX = /usr/pkg > config.mk
     echo SYSCONFDIR = /etc/wmpipe >> config.mk
   elif [ -f "/etc/DISTRO_SPECS" ] && \
     [ ! "$(egrep "puppy|Puppy" /etc/DISTRO_SPECS)" = "" ]
-    then echo PREFIX = /usr > config.mk ; fi
+    then echo PREFIX = /usr > config.mk
     echo SYSCONFDIR = /etc/wmpipe >> config.mk
     echo PUPPY = true >> config.mk
-  else echo PREFIX = /usr > config.mk ; fi
+  else echo PREFIX = /usr > config.mk
     echo SYSCONFDIR = /etc/wmpipe >> config.mk
   fi
 ;;

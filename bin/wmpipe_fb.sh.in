@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@@SHELL@@
 #
 #  wmpie_fb.sh - written 08.01.2013
 #  Creates a brows-able menu of directory contents in your WM menu

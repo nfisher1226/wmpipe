@@ -43,7 +43,8 @@ if [ ${APPS_DIR} -nt $cache ] ; then
         rm -rf ${app}
         app=$(basename ${app})
         sed -i "/$app/ d" ${cache}/dev ${cache}/gph ${cache}/mmd \
-          ${cache}/net ${cache}/set ${cache}/sys ${cache}/uti
+          ${cache}/gam ${cache}/net ${cache}/set ${cache}/sys \
+          ${cache}/uti
       fi
     done
   else
@@ -60,14 +61,16 @@ if [ ${APPS_DIR} -nt $cache ] ; then
       cts=$(grep Categories= $app)
       if [ ! "$(egrep "Development|TextEditor"<<<$cts)" = "" ]
         then echo $(basename ${app}) >> ${cache}/dev
-      elif [ ! "$(grep Graphics<<<$cts)" = "" ]
-        then echo $(basename ${app}) >> ${cache}/gph
       elif [ ! "$(grep Office<<<$cts)" = "" ]
         then echo $(basename ${app}) >> ${cache}/ofc
       elif [ ! "$(egrep "Engineering|Electronics|Science|Scientific"<<<$cts)" = "" ]
         then echo $(basename ${app}) >> ${cache}/sci
+      elif [ ! "$(grep Graphics<<<$cts)" = "" ]
+        then echo $(basename ${app}) >> ${cache}/gph
       elif [ ! "$(egrep "Multimedia|Audio|Video"<<<$cts)" = "" ]
         then echo $(basename ${app}) >> ${cache}/mmd
+      elif [ ! "$(egrep "Game|Games"<<<$cts)" = "" ]
+        then echo $(basename ${app}) >> ${cache}/gam
       elif [ ! "$(grep Network<<<$cts)" = "" ]
         then echo $(basename ${app}) >> ${cache}/net
       elif [ ! "$(grep Settings<<<$cts)" = "" ]
@@ -119,6 +122,13 @@ while read app
 do . ${cache}/${app}
   create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
 done<<<$(egrep -v "${exclude_mmd}" ${cache}/mmd)
+end_${WM}_submenu
+
+begin_${WM}_submenu "Games" "$CATEGORY_GAM_ICON" "GAMES"
+while read app
+do . ${cache}/${app}
+  create_${WM}_menuentry "${Name}" "${Icon}" "${Exec}"
+done<<<$(egrep -v "${exclude_gam}" ${cache}/gam)
 end_${WM}_submenu
 
 begin_${WM}_submenu "Network" "$CATEGORY_NET_ICON" "NETWORK"

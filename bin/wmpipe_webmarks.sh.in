@@ -27,29 +27,18 @@ BINDIR="${SELF%/*}"
 PREFIX="${BINDIR%/*}"
 . $PREFIX/lib/wmpipe/common.sh
 
-dwb_bmks () {
-  if [[ -f "$HOME/.config/dwb/default/bookmarks" ]] ; then
-    print_separator DWB
-    while read bm
-    do name=$(cut -f 2- -d ' ' <<< $bm)
-      url=$(cut -f 1 -d ' ' <<< $bm)
-      create_${WM}_menuentry "$(rev <<< $name)" - "dwb $(rev <<< $url)"
-    done <<< $(rev $HOME/.config/dwb/default/bookmarks)
-  fi
-}
-
 qutebrowser_bmks () {
   if [[ -f "$HOME/.config/qutebrowser/quickmarks" ]] ; then
     print_separator Qutebrowser
     while read bm
     do name=$(cut -f 2- -d ' ' <<< $bm)
       url=$(cut -f 1 -d ' ' <<< $bm)
-      create_${WM}_menuentry "$(rev <<< $name) - $(rev <<< $url)" - "qutebrowser $(rev <<< $url)"
+      create_${WM}_menuentry "$(rev <<< $name) - $(rev <<< $url | cut -b 1-25)" - "qutebrowser $(rev <<< $url)"
     done <<< $(rev $HOME/.config/qutebrowser/quickmarks)
   fi
   if [[ -f "$HOME/.config/qutebrowser/bookmarks/urls" ]] ; then
     while read bm
-    do name="$(cut -f 2- -d ' ' <<< $bm | cut -b 1-50)"
+    do name="$(cut -f 2- -d ' ' <<< $bm | cut -b 1-25)"
       url="$(cut -f 1 -d ' ' <<< $bm)"
       create_${WM}_menuentry "${name}" - "qutebrowser ${url}"
     done < $HOME/.config/qutebrowser/bookmarks/urls
@@ -74,7 +63,6 @@ midori_bmks () {
 }
 
 begin_${WM}_pipemenu
-dwb_bmks
 qutebrowser_bmks
 midori_bmks
 end_${WM}_pipemenu

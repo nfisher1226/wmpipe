@@ -109,8 +109,9 @@ uninstall: uninstall-bin
 		unlink ${DESTDIR}${SYSCONFDIR}/wmpipe/icons.conf || true
 
 clean:
-	for obj in config.mk lib/common.sh ${CONF_OBJS} ${BIN_OBJS} ; \
+	for obj in lib/common.sh ${CONF_OBJS} ${BIN_OBJS} ; \
 		do [ -f $${obj} ] && unlink $${obj} || true ; done
-
+distclean: clean
+	unlink config.mk || true
 .PHONY: install-conf install-libs install-sh install uninstall-bin \
-	uninstall clean
+	uninstall clean distclean

@@ -77,7 +77,7 @@ create_openbox_menuentry () {
 	TITLE="$1"
 	ICON="$2"
 	COMMAND="$3"
-	echo "<item label=\"$TITLE\" icon=\"$ICON\">
+	echo "    <item label=\"$TITLE\" icon=\"$ICON\">
       <action name=\"Execute\">
         <command>$COMMAND</command>
       </action>
